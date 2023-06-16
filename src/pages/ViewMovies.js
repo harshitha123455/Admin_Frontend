@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from 'react';
+import { Table, Divider, Tag } from 'antd';
 import AdminService from "../services/admin-services";
-import { useEffect, useState } from "react";
+
 
 const ViewMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -11,19 +13,60 @@ const ViewMovies = () => {
     });
   }, []);
 
-  return (
-    <div>
-        {movies.map((movie) => (
-            <div key={movie.id}>
-                <h1>{movie.name}</h1>
-                <h2>{movie.genre}</h2>
-                <h3>{movie.description}</h3>
-                <h4>{movie.releaseDate}</h4>
-                <h5>{movie.cast}</h5>
-                </div>
-        ))}
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Duration',
+      dataIndex: 'duration',
+      key: 'duration',
+    },
+    {
+      title: 'Genre',
+      dataIndex: 'genre',
+      key: 'genre',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Release Date',
+      dataIndex: 'releaseDate',
+      key: 'releaseDate',
+    },
+    {
+      title: 'Cast',
+      dataIndex: 'cast',
+      key: 'cast',
+      render: (cast) => (
+        <span>
+          {cast.map((actor, index) => (
+            <Tag color="blue" key={index}>
+              {actor}
+            </Tag>
+          ))}
+        </span>
+      ),
+    },
+  ];
 
-    </div>
+  const tableStyle = {
+    width: '100%',
+    maxWidth: '800px',
+    maxHeight: '400px', // Adjust the value to your desired height
+    margin: '0 auto',
+    background: '#283593', // Add your desired background color here
+  };
+
+  
+
+  return (
+    <Table dataSource={movies} columns={columns} style={tableStyle} scroll={{ y: tableStyle.maxHeight }} />
   );
 };
 

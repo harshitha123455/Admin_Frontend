@@ -28,7 +28,7 @@ const Movie = () => {
       message.error(response[1]);
     }
   };
-
+  
   return (
     <MainContainer>
       <TopText>ADD MOVIES</TopText>
@@ -36,34 +36,34 @@ const Movie = () => {
         <Box>
           <Form onFinish={handleFormSubmit}>
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-              <StyledInput />
+              <StyledInput style={{ width: '168px', marginLeft: '20px' , height: '40px' }} />
             </Form.Item>
             <Form.Item
               name="duration"
               label="Duration"
               rules={[{ required: true }]}
             >
-              <TimePicker format="HH:mm:ss" />
+              <TimePicker format="HH:mm:ss"  style={{ width: '168px', marginLeft: '10px' , height: '40px'}}/>
             </Form.Item>
             <Form.Item name="genre" label="Genre" rules={[{ required: true }]}>
-              <StyledInput />
+              <StyledInput style={{ width: '168px', marginLeft: '28px' , height: '40px'}}/>
             </Form.Item>
             <Form.Item
               name="description"
               label="Description"
               rules={[{ required: true }]}
             >
-              <StyledInput />
+              <StyledInput style={{ width: '168px', marginLeft: '0px' , height: '40px'}} />
             </Form.Item>
             <Form.Item
               name="releaseDate"
               label="Release Date"
               rules={[{ required: true }]}
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: '168px', marginLeft: '10px' , height: '40px'}} />
             </Form.Item>
             <Form.Item name="cast" label="Cast" rules={[{ required: true }]}>
-              <StyledTextArea />
+              <StyledTextArea style={{ width: '168px', marginLeft: '60px' , height: '40px'}}/>
             </Form.Item>
             <Form.Item>
               <ButtonContainer>

@@ -109,7 +109,7 @@ function Dashboard() {
         <Link to="/ViewMovies">VIEW MOVIES</Link>
       </Menu.Item>
       <Menu.Item key="3" icon={<EditOutlined />}>
-        <Link to="/movies">UPDATE MOVIES</Link>
+        <Link to="/UpdateMovies">UPDATE MOVIES</Link>
       </Menu.Item>
     </DropdownMenu>
   );
