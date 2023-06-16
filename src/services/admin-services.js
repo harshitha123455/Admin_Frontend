@@ -1,5 +1,3 @@
-import UpdateMovies from "../pages/UpdateMovies";
-
 export default class AdminService {
   BASE_URL = "http://localhost:8880";
 
@@ -48,7 +46,8 @@ export default class AdminService {
           description: newMovie.description,
           releaseDate: newMovie.releaseDate,
           duration: newMovie.duration,
-          cast: newMovie.cast
+          cast: newMovie.cast,
+          imageUrl: newMovie.imageUrl,
         }),
       });
       if (response.status === 202) {
@@ -80,9 +79,39 @@ export default class AdminService {
       console.log(error);
     }
   }
-}
 
-//Update Movies
+  updateMovie = async (updatedMovie) => {
+    console.log(updatedMovie);
+    try{
+        const response = await fetch(this.BASE_URL + "/admin/movie/update", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            id: updatedMovie.id,
+            name: updatedMovie.name,
+            director: updatedMovie.director.split(",").map((genre) => genre.trim()),
+            genre: updatedMovie.genre.split(",").map((genre) => genre.trim()),
+            description: updatedMovie.description,
+            releaseDate: updatedMovie.releaseDate,
+            duration: updatedMovie.duration,
+            cast: updatedMovie.cast.split(",").map((genre) => genre.trim())
+          }),
+        });
+        if (response.status === 202) {
+          return [true];
+        }
+        else {
+          return [false, await response.json().then((data) => data.message)];
+        }
+      } catch (error) {
+        console.log(error);
+        return [false, error.toString()];
+      }
+    }
+  }
 
 
 
