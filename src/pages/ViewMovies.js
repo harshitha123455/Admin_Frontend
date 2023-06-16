@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Divider, Tag } from 'antd';
 import AdminService from "../services/admin-services";
+import { message } from 'antd';
 
 
 const ViewMovies = () => {
@@ -12,6 +13,19 @@ const ViewMovies = () => {
       setMovies(data);
     });
   }, []);
+
+  const handleDelete = async (key) => {
+    try {
+      console.log(key);
+      await adminService.deleteMovie(key);
+      message.success('Movie deleted successfully!');
+      adminService.getAllMovies().then((data) => {
+        setMovies(data);
+      });
+    } catch (error) {
+      message.error('Error deleting movie: ' + error);
+    }
+  };
 
   const columns = [
     {
@@ -50,6 +64,15 @@ const ViewMovies = () => {
               {actor}
             </Tag>
           ))}
+        </span>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+          <a onClick={() => handleDelete(record.id)}>Delete</a>
         </span>
       ),
     },

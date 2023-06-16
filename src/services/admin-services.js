@@ -31,29 +31,35 @@ export default class AdminService {
     }
   };
 
-  //Add new Movie
+  // Add new Movie
   addMovie = async (newMovie) => {
     try {
-      const response = await fetch("http://localhost:8880/admin/movie/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
+      const formData = new FormData();
+      formData.append(
+        "movie",
+        JSON.stringify({
           name: newMovie.name,
           genre: newMovie.genre,
           description: newMovie.description,
           releaseDate: newMovie.releaseDate,
           duration: newMovie.duration,
           cast: newMovie.cast,
-          imageUrl: newMovie.imageUrl,
-        }),
+        })
+      );
+      formData.append("image", newMovie.image);
+
+      const response = await fetch("http://localhost:8880/admin/movie/add", {
+        method: "POST",
+        headers: {
+          contentType: "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: formData,
       });
+
       if (response.status === 202) {
         return [true];
-      }
-      else {
+      } else {
         return [false, await response.json().then((data) => data.message)];
       }
     } catch (error) {
@@ -78,50 +84,60 @@ export default class AdminService {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   updateMovie = async (updatedMovie) => {
     console.log(updatedMovie);
-    try{
-        const response = await fetch(this.BASE_URL + "/admin/movie/update", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-          },
-          body: JSON.stringify({
-            id: updatedMovie.id,
-            name: updatedMovie.name,
-            director: updatedMovie.director.split(",").map((genre) => genre.trim()),
-            genre: updatedMovie.genre.split(",").map((genre) => genre.trim()),
-            description: updatedMovie.description,
-            releaseDate: updatedMovie.releaseDate,
-            duration: updatedMovie.duration,
-            cast: updatedMovie.cast.split(",").map((genre) => genre.trim())
-          }),
-        });
-        if (response.status === 202) {
-          return [true];
-        }
-        else {
-          return [false, await response.json().then((data) => data.message)];
-        }
-      } catch (error) {
-        console.log(error);
-        return [false, error.toString()];
+    try {
+      const response = await fetch(this.BASE_URL + "/admin/movie/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          id: updatedMovie.id,
+          name: updatedMovie.name,
+          director: updatedMovie.director
+            .split(",")
+            .map((genre) => genre.trim()),
+          genre: updatedMovie.genre.split(",").map((genre) => genre.trim()),
+          description: updatedMovie.description,
+          releaseDate: updatedMovie.releaseDate,
+          duration: updatedMovie.duration,
+          cast: updatedMovie.cast.split(",").map((genre) => genre.trim()),
+        }),
+      });
+      if (response.status === 202) {
+        return [true];
+      } else {
+        return [false, await response.json().then((data) => data.message)];
       }
+    } catch (error) {
+      console.log(error);
+      return [false, error.toString()];
     }
-  }
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-  
+  deleteMovie = async (id) => {
+    try {
+      const response = await fetch(
+        this.BASE_URL + "/admin/movie/remove/id/" + id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.status === 202) {
+        return [true];
+      } else {
+        return [false, await response.json().then((data) => data.message)];
+      }
+    } catch (error) {
+      console.log(error);
+      return [false, error.toString()];
+    }
+  };
+}

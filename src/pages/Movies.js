@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button, Form, Input, DatePicker, message, TimePicker } from "antd";
+import { Button, Form, Input, DatePicker, message, TimePicker, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import AdminService from "../services/admin-services";
 import moment from "moment";
 
@@ -18,7 +19,10 @@ const Movie = () => {
       releaseDate: moment(values.releaseDate).format("YYYY-MM-DD"),
       duration: values.duration.format("HH:mm"),
       cast: values.cast.split(",").map((cast) => cast.trim()),
+      // Add the image property to the newMovie object
+      image: values.image && values.image[0] ? values.image[0].originFileObj : null,
     };
+
     var response = await adminService.addMovie(newMovie);
     if (response[0]) {
       setShowForm(false);
@@ -37,12 +41,28 @@ const Movie = () => {
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
               <StyledInput style={{ width: '168px', marginLeft: '20px' , height: '40px' }} />
             </Form.Item>
+            {/* Add the Upload component for the image */}
+            <Form.Item
+              name="image"
+              label="Image"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => e.fileList}
+              rules={[{ required: true, message: "Please upload an image" }]}
+            >
+              <Upload
+                accept="image/*"
+                maxCount={1}
+                beforeUpload={() => false} // Prevents immediate upload
+              >
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
+            </Form.Item>
             <Form.Item
               name="duration"
               label="Duration"
               rules={[{ required: true }]}
             >
-              <TimePicker format="HH:mm:ss"  style={{ width: '168px', marginLeft: '10px' , height: '40px'}}/>
+              <TimePicker format="HH:mm:ss" style={{ width: '168px', marginLeft: '10px' , height: '40px'}}/>
             </Form.Item>
             <Form.Item name="genre" label="Genre" rules={[{ required: true }]}>
               <StyledInput style={{ width: '168px', marginLeft: '28px' , height: '40px'}}/>
