@@ -15,7 +15,7 @@ const Movie = () => {
     const newMovie = {
       name: values.name,
       genre: values.genre.split(",").map((genre) => genre.trim()),
-      description: values.description.split(",").map((description) => description.trim()),
+      description: values.description,
       releaseDate: moment(values.releaseDate).format("YYYY-MM-DD"),
       duration: values.duration.format("HH:mm"),
       cast: values.cast.split(",").map((cast) => cast.trim()),
