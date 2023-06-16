@@ -43,7 +43,7 @@ export default class AdminService {
         body: JSON.stringify({
           name: newMovie.name,
           genre: newMovie.genre,
-          reviews: newMovie.reviews,
+          description: newMovie.description,
           releaseDate: newMovie.releaseDate,
           duration: newMovie.duration,
           cast: newMovie.cast

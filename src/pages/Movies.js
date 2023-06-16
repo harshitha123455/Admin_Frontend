@@ -15,7 +15,7 @@ const Movie = () => {
     const newMovie = {
       name: values.name,
       genre: values.genre.split(",").map((genre) => genre.trim()),
-      reviews: values.reviews.split(",").map((review) => review.trim()),
+      description: values.description.split(",").map((description) => description.trim()),
       releaseDate: moment(values.releaseDate).format("YYYY-MM-DD"),
       duration: values.duration.format("HH:mm"),
       cast: values.cast.split(",").map((cast) => cast.trim()),
@@ -49,8 +49,8 @@ const Movie = () => {
               <StyledInput />
             </Form.Item>
             <Form.Item
-              name="reviews"
-              label="Reviews"
+              name="description"
+              label="Description"
               rules={[{ required: true }]}
             >
               <StyledInput />
