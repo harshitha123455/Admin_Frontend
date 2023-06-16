@@ -83,23 +83,7 @@ export default class AdminService {
 }
 
 //Update Movies
-UpdateMovies = async (movieId, updatedData) => {
-  try {
-    const response = await fetch(this.BASE_URL + "/movie/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    });
-    if (response.ok) {
-      const responseBody = await response.json();
-      return responseBody;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 
 

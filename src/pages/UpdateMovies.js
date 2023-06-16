@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Table , message } from 'antd';
+import { Input, Button, Table } from 'antd';
 import AdminService from "../services/admin-services";
 
 const UpdateMovies = () => {
@@ -26,29 +26,18 @@ const UpdateMovies = () => {
   };
 
   // Function to handle update button click
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
+    // Perform the necessary update logic for the found movie
     if (foundMovie) {
+      // Perform the update operation using the editedData state
       const updatedMovie = { ...foundMovie, ...editedData };
-      try {
-        const response = await adminService.updateMovie(updatedMovie);
-        if (response.success) {
-          // Update the foundMovie state with the updated movie
-          setFoundMovie(updatedMovie);
-          // Reset the editedData state
-          setEditedData({});
-          console.log('Movie updated:', updatedMovie);
-          message.success('Movie updated successfully!');
-        } else {
-          console.error('Error updating movie:', response.error);
-          message.error('Failed to update movie. Please try again.');
-        }
-      } catch (error) {
-        console.error('Error updating movie:', error);
-        message.error('Failed to update movie. Please try again.');
-      }
+      // Update the foundMovie state with the updated movie
+      setFoundMovie(updatedMovie);
+      // Reset the editedData state
+      setEditedData({});
+      console.log('Movie updated:', updatedMovie);
     }
   };
-  
 
   // Function to find a movie by name
   const findMovieByName = (name, movies) => {

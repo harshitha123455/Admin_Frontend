@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, DatePicker, message, TimePicker } from "antd";
-import MoviesContainer from "../components/MovieContainer";
 import AdminService from "../services/admin-services";
 import moment from "moment";
 
