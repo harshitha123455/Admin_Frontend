@@ -132,6 +132,7 @@ const UpdateScreens = () => {
             bordered
             size="small"
             scroll={{ y: 300 }}
+            background = 'rgba(255, 255, 255, 0.5)'
           />
           <Button type="primary" onClick={handleUpdate}>Update</Button>
         </div>
