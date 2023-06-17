@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { BiMovie, BiFilm, BiTimeFive, BiShow, BiMoney, BiTable, BiCalendar, BiCreditCard, BiDesktop } from 'react-icons/bi';
-import { DownOutlined, UserOutlined , PlusCircleOutlined , DeleteOutlined , EditOutlined} from '@ant-design/icons';
+import { DownOutlined, UserOutlined , PlusCircleOutlined , DeleteOutlined , EditOutlined , EyeOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, message } from 'antd';
 import Header from './components/Header';
 import LogoImage from './images/Logo.png';
@@ -105,7 +105,7 @@ function Dashboard() {
       <Menu.Item key="1" icon={<PlusCircleOutlined />}>
         <Link to="/movies">ADD MOVIES</Link>
       </Menu.Item>
-      <Menu.Item key="2" icon={<DeleteOutlined />}>
+      <Menu.Item key="2" icon={<EyeOutlined />}>
         <Link to="/ViewMovies">VIEW MOVIES</Link>
       </Menu.Item>
       <Menu.Item key="3" icon={<EditOutlined />}>
@@ -135,24 +135,24 @@ function Dashboard() {
 
   const screensMenu = (
     <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
+      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
         <Link to="/screens">ADD SCREENS</Link>
       </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        <Link to="/screens">DELETE SCREENS</Link>
+      <Menu.Item key="2" icon={<EyeOutlined  />}>
+        <Link to="/ViewScreens">VIEW SCREENS</Link>
       </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        <Link to="/screens">UPDATE SCREENS</Link>
+      <Menu.Item key="3" icon={< EditOutlined/>}>
+        <Link to="/UpdateScreens">UPDATE SCREENS</Link>
       </Menu.Item>
     </DropdownMenu>
   );
 
   const timetableMenu = (
     <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/timetable">ADD TIMETABLE</Link>
+      <Menu.Item key="1" icon={< PlusCircleOutlined/>}>
+        <Link to="/TimeTable">ADD TIMETABLE</Link>
       </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
+      <Menu.Item key="2" icon={<EyeOutlined />}>
         <Link to="/timetable">VIEW TIMETABLE</Link>
       </Menu.Item>
     </DropdownMenu>

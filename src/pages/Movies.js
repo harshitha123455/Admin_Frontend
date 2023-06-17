@@ -39,7 +39,7 @@ const Movie = () => {
         <Box>
           <Form onFinish={handleFormSubmit}>
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-              <StyledInput style={{ width: '168px', marginLeft: '20px' , height: '40px' }} />
+              <StyledInput style={{ width: '168px', marginLeft: '25px' , height: '40px' }} />
             </Form.Item>
             {/* Add the Upload component for the image */}
             <Form.Item

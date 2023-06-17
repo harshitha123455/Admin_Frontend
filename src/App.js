@@ -5,8 +5,10 @@ import Dashboard from "./Dashboard";
 import Movies from "./pages/Movies";
 import ViewMovies from "./pages/ViewMovies";
 import Screens from "./pages/Screens";
-import Seating from "./pages/Seating";
+import ViewScreens from "./pages/ViewScreens";
+import UpdateScreens from "./pages/UpdateScreens";
 import UpdateMOvies from "./pages/UpdateMovies";
+import TimeTable from "./pages/TimeTable";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -22,7 +24,10 @@ function App() {
           <Route exact path="/ViewMovies" element={<ViewMovies />} />
           <Route exact path="/UpdateMovies" element={<UpdateMOvies />} />
           <Route exact path="/screens" element={<Screens />} />
-          <Route exact path="/seating" element={<Seating/>} />
+          <Route exact path="/ViewScreens" element={<ViewScreens />} />
+          <Route exact path="/UpdateScreens" element={<UpdateScreens />} />
+          <Route exact path="/TimeTable" element={<TimeTable />} />
+
        
         </Routes>
       </BrowserRouter>
