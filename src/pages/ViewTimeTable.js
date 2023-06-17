@@ -15,27 +15,17 @@ const ViewTable = () => {
       setScreens(data);
       console.log(data);
     });
-    adminService.getAllTimeTables().then((data) => {
-        setTimetable(data);
-        console.log(data);
-    });
   }, []);
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log("Form submitted:", values);
-
-    // Make API call to retrieve the entire timetable
-    adminService
-      .getAllTimeTables()
-      .then((data) => {
-        console.log("Entire Timetable:", data);
-        setTimetable(data); // Set the retrieved timetable to the state
-        message.success("Timetable retrieved");
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-        message.error("Failed to retrieve timetable");
-      });
+    const response = await adminService.getTimeTable(values.date, values.screen);
+    console.log(response);
+    if(response[0])
+      setTimetable(response[1])
+    else
+      message.error(response[1]);
+    console.log(timetable);
   };
 
   return (

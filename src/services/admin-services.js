@@ -1,3 +1,4 @@
+import moment from "moment";
 export default class AdminService {
   BASE_URL = "http://localhost:8880";
 
@@ -88,12 +89,15 @@ export default class AdminService {
 
   getMovieByName = async (name) => {
     try {
-      const response = await fetch(this.BASE_URL + "/movie/search/name/" + name, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        this.BASE_URL + "/movie/search/name/" + name,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.ok) {
         const responseBody = await response.json();
         return responseBody;
@@ -259,13 +263,16 @@ export default class AdminService {
 
   getScreenById = async (id) => {
     try {
-      const response = await fetch(this.BASE_URL + "/admin/screen/search/id/" + id, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        this.BASE_URL + "/admin/screen/search/id/" + id,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       if (response.ok) {
         const responseBody = await response.json();
         return responseBody;
@@ -276,10 +283,18 @@ export default class AdminService {
   };
 
   createTimeTable = async (newTimeTable) => {
-    newTimeTable.slot1.movie = await this.getMovieByName(newTimeTable.slot1.movie);
-    newTimeTable.slot2.movie = await this.getMovieByName(newTimeTable.slot2.movie);
-    newTimeTable.slot3.movie = await this.getMovieByName(newTimeTable.slot3.movie);
-    newTimeTable.slot4.movie = await this.getMovieByName(newTimeTable.slot4.movie);
+    newTimeTable.slot1.movie = await this.getMovieByName(
+      newTimeTable.slot1.movie
+    );
+    newTimeTable.slot2.movie = await this.getMovieByName(
+      newTimeTable.slot2.movie
+    );
+    newTimeTable.slot3.movie = await this.getMovieByName(
+      newTimeTable.slot3.movie
+    );
+    newTimeTable.slot4.movie = await this.getMovieByName(
+      newTimeTable.slot4.movie
+    );
     try {
       const body = JSON.stringify({
         date: newTimeTable.date,
@@ -288,7 +303,7 @@ export default class AdminService {
         slot2: newTimeTable.slot2,
         slot3: newTimeTable.slot3,
         slot4: newTimeTable.slot4,
-      })
+      });
       console.log(body);
       const response = await fetch(this.BASE_URL + "/admin/timeTable/add", {
         method: "POST",
@@ -308,7 +323,7 @@ export default class AdminService {
       console.log(error);
       return [false, error.toString()];
     }
-  }
+  };
 
   getAllTimeTables = async () => {
     try {
@@ -326,6 +341,33 @@ export default class AdminService {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  getTimeTable = async (date, screen) => {
+    console.log(date);
+    const selectedDate = moment(date).format('YYYY-MM-DD');
+    console.log(selectedDate);
+    try {
+      const response = await fetch(
+        this.BASE_URL + '/timeTable/search/dateAndScreen',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            date: selectedDate,
+            sid: screen,
+          }),
+        }
+      );
+      if (response.status === 202) {
+        const responseBody = await response.json();
+        return [true, responseBody];
+      } else return [false, (await response.json()).message];
+    } catch (error) {
+      console.log(error);
+      return [false, error.toString()];
+    }
+  };
 }
