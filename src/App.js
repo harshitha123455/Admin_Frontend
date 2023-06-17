@@ -9,6 +9,7 @@ import ViewScreens from "./pages/ViewScreens";
 import UpdateScreens from "./pages/UpdateScreens";
 import UpdateMOvies from "./pages/UpdateMovies";
 import TimeTable from "./pages/TimeTable";
+import ViewTimeTable from "./pages/ViewTimeTable";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/ViewScreens" element={<ViewScreens />} />
           <Route exact path="/UpdateScreens" element={<UpdateScreens />} />
           <Route exact path="/TimeTable" element={<TimeTable />} />
+          <Route exact path="/ViewTimeTable" element={<ViewTimeTable />} />
 
        
         </Routes>

@@ -153,7 +153,7 @@ function Dashboard() {
         <Link to="/TimeTable">ADD TIMETABLE</Link>
       </Menu.Item>
       <Menu.Item key="2" icon={<EyeOutlined />}>
-        <Link to="/timetable">VIEW TIMETABLE</Link>
+        <Link to="/ViewTimeTable">VIEW TIMETABLE</Link>
       </Menu.Item>
     </DropdownMenu>
   );

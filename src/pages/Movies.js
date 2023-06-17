@@ -8,7 +8,6 @@ import moment from "moment";
 const Movie = () => {
   const [showForm, setShowForm] = useState(true);
   const adminService = new AdminService();
-
   const handleFormSubmit = async (values) => {
     console.log("Form submitted:", values);
 
