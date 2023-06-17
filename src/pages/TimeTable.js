@@ -13,8 +13,14 @@ const TimeTable = () => {
   const [isEveningModalVisible, setIsEveningModalVisible] = useState(false);
   const [isNightModalVisible, setIsNightModalVisible] = useState(false);
   const [screens, setScreens] = useState([]);
-  const adminService = new AdminService();
   const [movies, setMovies] = useState([]);
+  const [morningShow, setMorningShow] = useState([]);
+  const [afternoonShow, setAfternoonShow] = useState([]);
+  const [eveningShow, setEveningShow] = useState([]);
+  const [nightShow, setNightShow] = useState([]);
+  const [dateShow, setDateShow] = useState(null);
+
+  const adminService = new AdminService();
 
   useEffect(() => {
     adminService.getAllScreens().then((data) => {
@@ -28,11 +34,29 @@ const TimeTable = () => {
 
   const handleFormSubmit = async (values) => {
     console.log("Form submitted:", values);
+    setDateShow({
+      date: values.date,
+      screen: values.screen,
+    });
     setShowTimeTable(true);
   };
 
   const handleTimeTableSubmit = async (values) => {
-    console.log("TimeTable submitted:", values);
+    const timeTableDetails = {
+      date:moment(dateShow.date).format("YYYY-MM-DD"),
+      screen: dateShow.screen,
+      slot1: morningShow,
+      slot2: afternoonShow,
+      slot3: eveningShow,
+      slot4: nightShow,
+    };
+    console.log("Time table submitted:", timeTableDetails);
+    const response = await adminService.createTimeTable(timeTableDetails);
+    if (response[0]) {
+      message.success("Time table created successfully");
+    } else {
+      message.error(response[1]);
+    }
   }
 
 
@@ -75,6 +99,7 @@ const TimeTable = () => {
       Executive Rate: ${values.executiveRate}<br>
       Premium Rate: ${values.premiumRate}
     `;
+    setMorningShow(values);
   };
 
   const handleAfternoonModalCancel = () => {
@@ -94,6 +119,7 @@ const TimeTable = () => {
       Executive Rate: ${values.executiveRate}<br>
       Premium Rate: ${values.premiumRate}
     `;
+    setAfternoonShow(values);
   };
 
   const handleEveningModalCancel = () => {
@@ -113,6 +139,7 @@ const TimeTable = () => {
       Executive Rate: ${values.executiveRate}<br>
       Premium Rate: ${values.premiumRate}
     `;
+    setEveningShow(values);
   };
 
   const handleNightModalCancel = () => {
@@ -132,6 +159,7 @@ const TimeTable = () => {
       Executive Rate: ${values.executiveRate}<br>
       Premium Rate: ${values.premiumRate}
     `;
+    setNightShow(values);
   };
 
   return (
@@ -202,7 +230,7 @@ const TimeTable = () => {
             </Col>
           </Row>
           <ButtonContainer>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" onClick={() => handleTimeTableSubmit()}>
               ADD TIMETABLE
             </Button>
           </ButtonContainer>
@@ -273,7 +301,7 @@ const TimeTable = () => {
               <Form.Item name="movie" label="Movie" rules={[{ required: true }]}>
                 <Select style={{ width: "100%" }}>
                   {movies.map((movie) => (
-                    <Select.Option key={movie.id} value={movie.id}>
+                    <Select.Option key={movie.name} value={movie.name}>
                       {movie.name}
                     </Select.Option>
                   ))}
@@ -323,7 +351,7 @@ const TimeTable = () => {
               <Form.Item name="movie" label="Movie" rules={[{ required: true }]}>
                 <Select style={{ width: "100%" }}>
                   {movies.map((movie) => (
-                    <Select.Option key={movie.id} value={movie.id}>
+                    <Select.Option key={movie.name} value={movie.name}>
                       {movie.name}
                     </Select.Option>
                   ))}
@@ -373,7 +401,7 @@ const TimeTable = () => {
               <Form.Item name="movie" label="Movie" rules={[{ required: true }]}>
                 <Select style={{ width: "100%" }}>
                   {movies.map((movie) => (
-                    <Select.Option key={movie.id} value={movie.id}>
+                    <Select.Option key={movie.name} value={movie.name}>
                       {movie.name}
                     </Select.Option>
                   ))}
