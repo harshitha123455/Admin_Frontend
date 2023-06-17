@@ -370,4 +370,42 @@ export default class AdminService {
       return [false, error.toString()];
     }
   };
+
+  //get Screens
+  getAllShows = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/show/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getAllBookings = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/admin/booking/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
+

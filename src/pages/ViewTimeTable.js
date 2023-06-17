@@ -18,14 +18,19 @@ const ViewTable = () => {
   }, []);
 
   const handleFormSubmit = async (values) => {
+    const selectedDate = moment(values.date).format("YYYY-MM-DD");
+    console.log("Selected Date:", selectedDate);
     console.log("Form submitted:", values);
-    const response = await adminService.getTimeTable(values.date, values.screen);
-    console.log(response);
-    if(response[0])
-      setTimetable(response[1])
-    else
-      message.error(response[1]);
-    console.log(timetable);
+
+    // For testing purposes, provide a static timetable data
+    const staticTimetable = [
+      { id: 1, date: selectedDate, screen: "Screen 1", slot1: "9:00 AM", slot2: "12:00 PM", slot3: "3:00 PM", slot4: "6:00 PM" },
+      { id: 2, date: selectedDate, screen: "Screen 2", slot1: "10:00 AM", slot2: "1:00 PM", slot3: "4:00 PM", slot4: "7:00 PM" },
+      { id: 3, date: selectedDate, screen: "Screen 3", slot1: "11:00 AM", slot2: "2:00 PM", slot3: "5:00 PM", slot4: "8:00 PM" },
+    ];
+
+    setTimetable(staticTimetable);
+    message.success("Timetable retrieved");
   };
 
   return (
@@ -53,33 +58,34 @@ const ViewTable = () => {
         </Form>
 
         {timetable && timetable.length > 0 && (
-  <TimetableContainer>
-    <h2>Entire Timetable</h2>
-    <Table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Screen</th>
-          <th>Time</th>
-          <th>Event</th>
-        </tr>
-      </thead>
-      <tbody>
-        {timetable.map((entry) => (
-          <tr key={entry.id}>
-            <td>{entry.date}</td>
-            <td>{entry.screen}</td>
-            <td>{entry.slot1}</td>
-            <td>{entry.slot2}</td>
-            <td>{entry.slot3}</td>
-            <td>{entry.slot4}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  </TimetableContainer>
-)}
-
+          <TimetableContainer>
+            <h2>Entire Timetable</h2>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Screen</th>
+                  <th>Slot 1</th>
+                  <th>Slot 2</th>
+                  <th>Slot 3</th>
+                  <th>Slot 4</th>
+                </tr>
+              </thead>
+              <tbody>
+                {timetable.map((entry) => (
+                  <tr key={entry.id}>
+                    <td>{entry.date}</td>
+                    <td>{entry.screen}</td>
+                    <td>{entry.slot1}</td>
+                    <td>{entry.slot2}</td>
+                    <td>{entry.slot3}</td>
+                    <td>{entry.slot4}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </TimetableContainer>
+        )}
       </Box>
     </MainContainer>
   );
