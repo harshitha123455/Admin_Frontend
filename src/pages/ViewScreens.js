@@ -56,7 +56,7 @@ const ViewScreens = () => {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a onClick={() => handleDelete(record.name)}>Delete</a>
+          <a onClick={() => handleDelete(record.id)}>Delete</a>
         </span>
       ),
     },
