@@ -371,8 +371,45 @@ export default class AdminService {
   formatDate = (date) => {
     const dateObj = new Date(date);
     const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
+  };
+
+  //get Screens
+  getAllShows = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/show/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getAllBookings = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/admin/booking/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 }

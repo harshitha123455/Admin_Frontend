@@ -117,10 +117,10 @@ function Dashboard() {
   const showsMenu = (
     <DropdownMenu onClick={handleMenuClick}>
       <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/shows">VIEW SHOWS</Link>
+        <Link to="/ViewShows">VIEW SHOWS</Link>
       </Menu.Item>
       <Menu.Item key="2" icon={<UserOutlined />}>
-        <Link to="/bookings">VIEW BOOKINGS</Link>
+        <Link to="/ViewBookings">VIEW BOOKINGS</Link>
       </Menu.Item>
     </DropdownMenu>
   );
