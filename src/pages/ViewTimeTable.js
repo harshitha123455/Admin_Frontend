@@ -73,7 +73,7 @@ const ViewTable = () => {
 
         {timetable && timetable.length > 0 && (
           <TimetableContainer>
-            <h2>Entire Timetable</h2>
+            
             <Table>
               <thead>
                 <tr>
@@ -132,23 +132,30 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
+
+
 const TimetableContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
+  display: flex;
+  margin-right: 0px;
+  margin-left: 0px;
+  
 `;
 
 const Table = styled.table`
-  width: 100%;
+  width: 70%;
   border-collapse: collapse;
 
   th,
   td {
-    padding: 8px;
+    padding: 9px;
     border-bottom: 1px solid #ddd;
   }
-
   th {
     background-color: #f2f2f2;
-    text-align: left;
+    font-size: 16px;
+    margin-right: 20px;
+    text-align: right;
   }
 `;
 

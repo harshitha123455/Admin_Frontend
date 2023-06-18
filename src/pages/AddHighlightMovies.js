@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import AdminService from "../services/admin-services";
-import styled from "styled-components";
-import { message } from "antd";
+import React, { useState, useEffect } from 'react';
+import AdminService from '../services/admin-services';
+import styled from 'styled-components';
 
 const MainContainer = styled.div`
   display: flex;
@@ -32,8 +31,18 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
+const PrimaryButton = styled.button`
+  background-color: #32a6f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
 const AddHighlightMovie = () => {
-  const [movieName, setMovieName] = useState("");
+  const [movieName, setMovieName] = useState('');
   const [poster, setPoster] = useState(null);
   const [movies, setMovies] = useState([]);
   const [movieNamesList, setMovieNamesList] = useState([]);
@@ -112,7 +121,7 @@ const AddHighlightMovie = () => {
             />
           </div>
           <ButtonContainer>
-            <button type="submit">Add Highlight Movie</button>
+            <PrimaryButton type="submit">Add Movie</PrimaryButton>
           </ButtonContainer>
         </form>
       </Box>
