@@ -33,22 +33,21 @@ export default class AdminService {
   };
 
   // Add new Movie
-  addMovie = async (newHighlightMovie) => {
+  addMovie = async (newMovie) => {
     try {
       const formData = new FormData();
       formData.append(
         "movie",
         JSON.stringify({
-          name: newHighlightMovie.name,
-          genre: newHighlightMovie.genre,
-          description: newHighlightMovie.description,
-          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
-          duration: newHighlightMovie.duration,
-          cast: newHighlightMovie.cast,
+          name: newMovie.name,
+          genre: newMovie.genre,
+          description: newMovie.description,
+          releaseDate: this.formatDate(newMovie.releaseDate),
+          duration: newMovie.duration,
+          cast: newMovie.cast,
         })
       );
-      formData.append("image", newHighlightMovie.image);
-
+      formData.append("image", newMovie.image);
       const response = await fetch("http://localhost:8880/admin/movie/add", {
         method: "POST",
         headers: {
@@ -282,8 +281,20 @@ export default class AdminService {
     }
   };
 
-  createTimeTable = async (morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen) => {
-    console.log(morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen);
+  createTimeTable = async (
+    morningShow,
+    afternoonShow,
+    eveningShow,
+    nightShow,
+    dateAndScreen
+  ) => {
+    console.log(
+      morningShow,
+      afternoonShow,
+      eveningShow,
+      nightShow,
+      dateAndScreen
+    );
     try {
       const response = await fetch(this.BASE_URL + "/admin/timeTable/add", {
         method: "POST",
@@ -298,26 +309,26 @@ export default class AdminService {
             movie: await this.getMovieByName(morningShow.movie),
             normalRate: morningShow.normalRate,
             premiumRate: morningShow.premiumRate,
-            executiveRate: morningShow.executiveRate
+            executiveRate: morningShow.executiveRate,
           },
           slot2: {
             movie: await this.getMovieByName(afternoonShow.movie),
             normalRate: afternoonShow.normalRate,
             premiumRate: afternoonShow.premiumRate,
-            executiveRate: morningShow.executiveRate
+            executiveRate: morningShow.executiveRate,
           },
           slot3: {
             movie: await this.getMovieByName(eveningShow.movie),
             normalRate: eveningShow.normalRate,
             premiumRate: eveningShow.premiumRate,
-            executiveRate: eveningShow.executiveRate
+            executiveRate: eveningShow.executiveRate,
           },
           slot4: {
             movie: await this.getMovieByName(nightShow.movie),
             normalRate: nightShow.normalRate,
             premiumRate: nightShow.premiumRate,
-            executiveRate: nightShow.executiveRate
-          }
+            executiveRate: nightShow.executiveRate,
+          },
         }),
       });
       if (response.status === 202) {
@@ -325,8 +336,7 @@ export default class AdminService {
       } else {
         return [false, await response.json().then((data) => data.message)];
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return [false, error.toString()];
     }
@@ -419,7 +429,6 @@ export default class AdminService {
       console.log(error);
     }
   };
-  
   addHighlightMovie = async (newHighlightMovie) => {
     try {
       const formData = new FormData();
@@ -427,19 +436,23 @@ export default class AdminService {
         "movie",
         JSON.stringify({
           name: newHighlightMovie.name,
+          genre: newHighlightMovie.genre,
+          description: newHighlightMovie.description,
+          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
+          duration: newHighlightMovie.duration,
+          cast: newHighlightMovie.cast,
         })
       );
       formData.append("image", newHighlightMovie.image);
 
-      const response = await fetch("http://localhost:8880/admin/highlight/set", {
+      const response = await fetch("http://localhost:8880/admin/movie/add", {
         method: "POST",
         headers: {
-          contentType: "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData,
       });
-
+  
       if (response.status === 202) {
         return [true];
       } else {
@@ -450,4 +463,5 @@ export default class AdminService {
       return [false, error.toString()];
     }
   };
+  
 }

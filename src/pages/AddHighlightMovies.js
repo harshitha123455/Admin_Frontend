@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import AdminService from '../services/admin-services';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import AdminService from "../services/admin-services";
+import styled from "styled-components";
+import { message } from "antd";
 
 const MainContainer = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const PrimaryButton = styled.button`
 `;
 
 const AddHighlightMovie = () => {
-  const [movieName, setMovieName] = useState('');
+  const [movieName, setMovieName] = useState("");
   const [poster, setPoster] = useState(null);
   const [movies, setMovies] = useState([]);
   const [movieNamesList, setMovieNamesList] = useState([]);
@@ -55,16 +56,6 @@ const AddHighlightMovie = () => {
     });
   }, []);
 
-  const fetchMovieNames = async () => {
-    try {
-      const movieNames = await adminService.getAllMovies();
-      setMovieNamesList(movieNames);
-    } catch (error) {
-      console.error('Error fetching movie names:', error);
-      // Handle error scenario
-    }
-  };
-
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
   };
@@ -76,16 +67,16 @@ const AddHighlightMovie = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const formData = new FormData();
       formData.append('name', movieName);
       formData.append('image', poster);
-  
+
       await adminService.addHighlightMovie(formData);
       setMovieName('');
       setPoster(null);
-  
+
       console.log('Movie details added successfully!');
     } catch (error) {
       console.error('Error adding movie details:', error);
