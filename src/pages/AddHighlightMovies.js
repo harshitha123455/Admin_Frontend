@@ -31,6 +31,16 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
+const PrimaryButton = styled.button`
+  background-color: #32a6f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
 const AddHighlightMovie = () => {
   const [movieName, setMovieName] = useState('');
   const [poster, setPoster] = useState(null);
@@ -66,16 +76,16 @@ const AddHighlightMovie = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const formData = new FormData();
       formData.append('name', movieName);
       formData.append('image', poster);
-
+  
       await adminService.addHighlightMovie(formData);
       setMovieName('');
       setPoster(null);
-
+  
       console.log('Movie details added successfully!');
     } catch (error) {
       console.error('Error adding movie details:', error);
@@ -112,7 +122,7 @@ const AddHighlightMovie = () => {
             />
           </div>
           <ButtonContainer>
-            <button type="submit">Add Highlight Movie</button>
+            <PrimaryButton type="submit">Add Movie</PrimaryButton>
           </ButtonContainer>
         </form>
       </Box>

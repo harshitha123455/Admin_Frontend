@@ -419,6 +419,7 @@ export default class AdminService {
       console.log(error);
     }
   };
+  
   addHighlightMovie = async (newHighlightMovie) => {
     try {
       const formData = new FormData();
@@ -426,16 +427,11 @@ export default class AdminService {
         "movie",
         JSON.stringify({
           name: newHighlightMovie.name,
-          genre: newHighlightMovie.genre,
-          description: newHighlightMovie.description,
-          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
-          duration: newHighlightMovie.duration,
-          cast: newHighlightMovie.cast,
         })
       );
       formData.append("image", newHighlightMovie.image);
 
-      const response = await fetch("http://localhost:8880/admin/movie/add", {
+      const response = await fetch("http://localhost:8880/admin/highlight/set", {
         method: "POST",
         headers: {
           contentType: "multipart/form-data",
