@@ -15,7 +15,7 @@ const Movie = () => {
       name: values.name,
       genre: values.genre.split(",").map((genre) => genre.trim()),
       description: values.description,
-      releaseDate: moment(values.releaseDate).format("YYYY-MM-DD"),
+      releaseDate: values.releaseDate,
       duration: values.duration.format("HH:mm"),
       cast: values.cast.split(",").map((cast) => cast.trim()),
       // Add the image property to the newMovie object

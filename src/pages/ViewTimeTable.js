@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, DatePicker, Select, Button, message } from "antd";
 import styled from "styled-components";
-import moment from "moment";
 import AdminService from "../services/admin-services";
 
 const ViewTable = () => {

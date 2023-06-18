@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment/moment";
 export default class AdminService {
   BASE_URL = "http://localhost:8880";
 
@@ -42,7 +42,7 @@ export default class AdminService {
           name: newMovie.name,
           genre: newMovie.genre,
           description: newMovie.description,
-          releaseDate: newMovie.releaseDate,
+          releaseDate: this.formatDate(newMovie.releaseDate),
           duration: newMovie.duration,
           cast: newMovie.cast,
         })
@@ -297,7 +297,7 @@ export default class AdminService {
     );
     try {
       const body = JSON.stringify({
-        date: newTimeTable.date,
+        date: this.formatDate(newTimeTable.date),
         screen: await this.getScreenById(newTimeTable.screen),
         slot1: newTimeTable.slot1,
         slot2: newTimeTable.slot2,
@@ -344,19 +344,16 @@ export default class AdminService {
   };
 
   getTimeTable = async (date, screen) => {
-    console.log(date);
-    const selectedDate = moment(date).format('YYYY-MM-DD');
-    console.log(selectedDate);
     try {
       const response = await fetch(
-        this.BASE_URL + '/timeTable/search/dateAndScreen',
+        this.BASE_URL + "/timeTable/search/dateAndScreen",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            date: selectedDate,
+            date: this.formatDate(date),
             sid: screen,
           }),
         }
@@ -369,5 +366,13 @@ export default class AdminService {
       console.log(error);
       return [false, error.toString()];
     }
+  };
+
+  formatDate = (date) => {
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 }
