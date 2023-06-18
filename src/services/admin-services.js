@@ -33,21 +33,21 @@ export default class AdminService {
   };
 
   // Add new Movie
-  addMovie = async (newMovie) => {
+  addMovie = async (newHighlightMovie) => {
     try {
       const formData = new FormData();
       formData.append(
         "movie",
         JSON.stringify({
-          name: newMovie.name,
-          genre: newMovie.genre,
-          description: newMovie.description,
-          releaseDate: this.formatDate(newMovie.releaseDate),
-          duration: newMovie.duration,
-          cast: newMovie.cast,
+          name: newHighlightMovie.name,
+          genre: newHighlightMovie.genre,
+          description: newHighlightMovie.description,
+          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
+          duration: newHighlightMovie.duration,
+          cast: newHighlightMovie.cast,
         })
       );
-      formData.append("image", newMovie.image);
+      formData.append("image", newHighlightMovie.image);
 
       const response = await fetch("http://localhost:8880/admin/movie/add", {
         method: "POST",
@@ -417,6 +417,41 @@ export default class AdminService {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+  addHighlightMovie = async (newHighlightMovie) => {
+    try {
+      const formData = new FormData();
+      formData.append(
+        "movie",
+        JSON.stringify({
+          name: newHighlightMovie.name,
+          genre: newHighlightMovie.genre,
+          description: newHighlightMovie.description,
+          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
+          duration: newHighlightMovie.duration,
+          cast: newHighlightMovie.cast,
+        })
+      );
+      formData.append("image", newHighlightMovie.image);
+
+      const response = await fetch("http://localhost:8880/admin/movie/add", {
+        method: "POST",
+        headers: {
+          contentType: "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: formData,
+      });
+
+      if (response.status === 202) {
+        return [true];
+      } else {
+        return [false, await response.json().then((data) => data.message)];
+      }
+    } catch (error) {
+      console.log(error);
+      return [false, error.toString()];
     }
   };
 }
