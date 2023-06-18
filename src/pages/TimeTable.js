@@ -16,10 +16,15 @@ const TimeTable = () => {
   const adminService = new AdminService();
   const [movies, setMovies] = useState([]);
 
+  const [dateAndScreen, setDateAndScreen] = useState(null);
+  const [morningShow, setMorningShow] = useState(null);
+  const [afternoonShow, setAfternoonShow] = useState(null);
+  const [eveningShow, setEveningShow] = useState(null);
+  const [nightShow, setNightShow] = useState(null);
+
   useEffect(() => {
     adminService.getAllScreens().then((data) => {
       setScreens(data);
-      console.log(data);
     });
     adminService.getAllMovies().then((data) => {
       setMovies(data);
@@ -28,6 +33,7 @@ const TimeTable = () => {
 
   const handleFormSubmit = async (values) => {
     console.log("Form submitted:", values);
+    setDateAndScreen(values);
     setShowTimeTable(true);
   };
 
@@ -60,6 +66,7 @@ const TimeTable = () => {
 
   const handleModalSubmit = (values) => {
     console.log("Modal form submitted:", values);
+    setMorningShow(values);
     setIsModalVisible(false);
 
     // Update the morning show button column with the submitted values
@@ -79,6 +86,7 @@ const TimeTable = () => {
 
   const handleAfternoonModalSubmit = (values) => {
     console.log("Afternoon modal form submitted:", values);
+    setAfternoonShow(values);
     setIsAfternoonModalVisible(false);
 
     // Update the afternoon show button column with the submitted values
@@ -97,6 +105,7 @@ const TimeTable = () => {
   };
 
   const handleEveningModalSubmit = (values) => {
+    setEveningShow(values);
     console.log("Evening modal form submitted:", values);
     setIsEveningModalVisible(false);
 
@@ -116,6 +125,7 @@ const TimeTable = () => {
   };
 
   const handleNightModalSubmit = (values) => {
+    setNightShow(values);
     console.log("Night modal form submitted:", values);
     setIsNightModalVisible(false);
 
@@ -128,6 +138,18 @@ const TimeTable = () => {
       Executive Rate: ${values.executiveRate}<br>
       Premium Rate: ${values.premiumRate}
     `;
+  };
+
+  const handleFinalSubmit = async () => {
+    console.log("Final submit clicked");
+    const response = await adminService.createTimeTable(morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen);
+    if (response[0]) {
+      message.success("Time table created successfully");
+      setShowTimeTable(false);
+    }
+    else {
+      message.error(response[1]);
+    }
   };
 
   return (
@@ -198,7 +220,7 @@ const TimeTable = () => {
             </Col>
           </Row>
           <ButtonContainer>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" onClick={handleFinalSubmit}>
               ADD TIMETABLE
             </Button>
           </ButtonContainer>

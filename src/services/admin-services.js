@@ -282,44 +282,51 @@ export default class AdminService {
     }
   };
 
-  createTimeTable = async (newTimeTable) => {
-    newTimeTable.slot1.movie = await this.getMovieByName(
-      newTimeTable.slot1.movie
-    );
-    newTimeTable.slot2.movie = await this.getMovieByName(
-      newTimeTable.slot2.movie
-    );
-    newTimeTable.slot3.movie = await this.getMovieByName(
-      newTimeTable.slot3.movie
-    );
-    newTimeTable.slot4.movie = await this.getMovieByName(
-      newTimeTable.slot4.movie
-    );
+  createTimeTable = async (morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen) => {
+    console.log(morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen);
     try {
-      const body = JSON.stringify({
-        date: this.formatDate(newTimeTable.date),
-        screen: await this.getScreenById(newTimeTable.screen),
-        slot1: newTimeTable.slot1,
-        slot2: newTimeTable.slot2,
-        slot3: newTimeTable.slot3,
-        slot4: newTimeTable.slot4,
-      });
-      console.log(body);
       const response = await fetch(this.BASE_URL + "/admin/timeTable/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        body: body,
+        body: JSON.stringify({
+          date: this.formatDate(dateAndScreen.date),
+          screen: await this.getScreenById(dateAndScreen.screen),
+          slot1: {
+            movie: await this.getMovieByName(morningShow.movie),
+            normalRate: morningShow.normalRate,
+            premiumRate: morningShow.premiumRate,
+            executiveRate: morningShow.executiveRate
+          },
+          slot2: {
+            movie: await this.getMovieByName(afternoonShow.movie),
+            normalRate: afternoonShow.normalRate,
+            premiumRate: afternoonShow.premiumRate,
+            executiveRate: morningShow.executiveRate
+          },
+          slot3: {
+            movie: await this.getMovieByName(eveningShow.movie),
+            normalRate: eveningShow.normalRate,
+            premiumRate: eveningShow.premiumRate,
+            executiveRate: eveningShow.executiveRate
+          },
+          slot4: {
+            movie: await this.getMovieByName(nightShow.movie),
+            normalRate: nightShow.normalRate,
+            premiumRate: nightShow.premiumRate,
+            executiveRate: nightShow.executiveRate
+          }
+        }),
       });
-
       if (response.status === 202) {
         return [true];
       } else {
-        return [false, (await response.json()).message];
+        return [false, await response.json().then((data) => data.message)];
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
       return [false, error.toString()];
     }

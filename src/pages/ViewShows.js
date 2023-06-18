@@ -13,7 +13,18 @@ const ViewShows = () => {
   const fetchShows = async () => {
     try {
       const data = await adminService.getAllShows();
-      setShows(data);
+      setShows(data.map((show) => ({
+        key: show.id,
+        movie: show.movie.name,
+        availableSeats: show.seatingArrangement.availableSeats,
+        availableNormalSeats: show.seatingArrangement.availableNormalSeats,
+        availablePremiumSeats: show.seatingArrangement.availablePremiumSeats,
+        availableExecutiveSeats: show.seatingArrangement.availableExecutiveSeats,
+        normalRate: show.normalRate,
+        executiveRate: show.executiveRate,
+        premiumRate: show.premiumRate,
+      })));
+      console.log(data);
     } catch (error) {
       message.error('Error fetching shows: ' + error);
     }
@@ -69,15 +80,6 @@ const ViewShows = () => {
       title: 'Premium Rate',
       dataIndex: 'premiumRate',
       key: 'premiumRate',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-    //   render: (text, record) => (
-    //     <span>
-    //       <a onClick={() => handleDelete(record.id)}>Delete</a>
-    //     </span>
-    //   ),
     },
   ];
 
