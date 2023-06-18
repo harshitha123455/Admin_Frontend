@@ -111,6 +111,9 @@ function Dashboard() {
       <Menu.Item key="3" icon={<EditOutlined />}>
         <Link to="/UpdateMovies">UPDATE MOVIES</Link>
       </Menu.Item>
+      <Menu.Item key="3" icon={<EditOutlined />}>
+        <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
+      </Menu.Item>
     </DropdownMenu>
   );
 
