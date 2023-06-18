@@ -16,6 +16,7 @@ const ViewShows = () => {
       setShows(data.map((show) => ({
         key: show.id,
         movie: show.movie.name,
+        time: show.time,
         availableSeats: show.seatingArrangement.availableSeats,
         availableNormalSeats: show.seatingArrangement.availableNormalSeats,
         availablePremiumSeats: show.seatingArrangement.availablePremiumSeats,
@@ -45,6 +46,11 @@ const ViewShows = () => {
       title: 'Movie Name',
       dataIndex: 'movie',
       key: 'movie',
+    },
+    {
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
     },
     {
       title: 'Available Seats',
