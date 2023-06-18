@@ -419,31 +419,20 @@ export default class AdminService {
       console.log(error);
     }
   };
-  addHighlightMovie = async (newHighlightMovie) => {
+  addHighlightMovie = async (movieName, poster) => {
     try {
       const formData = new FormData();
-      formData.append(
-        "movie",
-        JSON.stringify({
-          name: newHighlightMovie.name,
-          genre: newHighlightMovie.genre,
-          description: newHighlightMovie.description,
-          releaseDate: this.formatDate(newHighlightMovie.releaseDate),
-          duration: newHighlightMovie.duration,
-          cast: newHighlightMovie.cast,
-        })
-      );
-      formData.append("image", newHighlightMovie.image);
-
-      const response = await fetch("http://localhost:8880/admin/movie/add", {
+      formData.append("id", await this.getMovieByName(movieName).then((data) => data.id));
+      formData.append("image", poster);
+  
+      const response = await fetch(this.BASE_URL + "/admin/highlight/set", {
         method: "POST",
         headers: {
-          contentType: "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData,
       });
-
+  
       if (response.status === 202) {
         return [true];
       } else {
@@ -454,4 +443,5 @@ export default class AdminService {
       return [false, error.toString()];
     }
   };
+  
 }
