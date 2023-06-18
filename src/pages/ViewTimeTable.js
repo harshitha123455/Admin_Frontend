@@ -78,7 +78,7 @@ const ViewTable = () => {
               <thead>
                 <tr>
                   <th>Time</th>
-                  <th>Screen</th>
+                  <th>Movie Name</th>
                   <th>Available Normal Seats</th>
                   <th>Available Executive Seats</th>
                   <th>Available Premium Seats</th>
