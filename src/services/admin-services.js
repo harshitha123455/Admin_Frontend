@@ -422,21 +422,17 @@ export default class AdminService {
   addHighlightMovie = async (movieName, poster) => {
     try {
       const formData = new FormData();
-      formData.append(
-        "id",
-        await this.getMovieByName(movieName).then((data) => data.id)
-      );
+      formData.append("id", await this.getMovieByName(movieName).then((data) => data.id));
       formData.append("image", poster);
-
+  
       const response = await fetch(this.BASE_URL + "/admin/highlight/set", {
         method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData,
       });
-
+  
       if (response.status === 202) {
         return [true];
       } else {
@@ -447,4 +443,5 @@ export default class AdminService {
       return [false, error.toString()];
     }
   };
+  
 }

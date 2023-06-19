@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminService from '../services/admin-services';
 import styled from 'styled-components';
+import { message } from 'antd';
 
 const MainContainer = styled.div`
   display: flex;
@@ -54,16 +55,6 @@ const AddHighlightMovie = () => {
       console.log(data);
     });
   }, []);
-
-  const fetchMovieNames = async () => {
-    try {
-      const movieNames = await adminService.getAllMovies();
-      setMovieNamesList(movieNames);
-    } catch (error) {
-      console.error("Error fetching movie names:", error);
-      // Handle error scenario
-    }
-  };
 
   const handleMovieNameChange = (e) => {
     setMovieName(e.target.value);
