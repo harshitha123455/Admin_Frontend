@@ -480,5 +480,24 @@ export default class AdminService {
       console.log(error);
     }
   };
+
+  getAllPayment = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/admin/payment/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        console.log(responseBody);
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
 }

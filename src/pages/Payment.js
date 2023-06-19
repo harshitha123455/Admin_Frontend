@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
 import styled from "styled-components";
+import AdminService from "../services/admin-services";
 
 const PaymentForm = () => {
+  const adminService = new AdminService();
   const [paymentData, setPaymentData] = useState([]);
+
+  useEffect(() => {
+    const fetchPaymentData = async () => {
+      try {
+        const data = await adminService.getAllPayment();
+        setPaymentData(data);
+      } catch (error) {
+        console.log(error);
+        // Handle error
+      }
+    };
+
+    fetchPaymentData();
+  }, []);
 
   const columns = [
     {
@@ -18,11 +34,9 @@ const PaymentForm = () => {
     },
   ];
 
-
   return (
-    
     <FormContainer>
-        <TopText>PAYMENT</TopText>
+      <TopText>PAYMENT</TopText>
       <Table columns={columns} dataSource={paymentData} />
     </FormContainer>
   );
@@ -36,7 +50,6 @@ const TopText = styled.h1`
   color: #32a6f3; /* Set the desired font color */
   text-align: center; /* Center-align the text */
 `;
-
 
 const FormContainer = styled.div`
   display: flex;
