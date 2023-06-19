@@ -1,57 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Divider, Tag } from 'antd';
-import AdminService from "../services/admin-services";
+import { Table, Tag } from 'antd';
+import { Resizable } from 'react-resizable';
+import AdminService from '../services/admin-services';
 import { message } from 'antd';
-
 
 const ViewMovies = () => {
   const [movies, setMovies] = useState([]);
-  const adminService = new AdminService();
-
-  useEffect(() => {
-    adminService.getAllMovies().then((data) => {
-      setMovies(data);
-    });
-  }, []);
-
-  const handleDelete = async (key) => {
-    try {
-      console.log(key);
-      await adminService.deleteMovie(key);
-      message.success('Movie deleted successfully!');
-      adminService.getAllMovies().then((data) => {
-        setMovies(data);
-      });
-    } catch (error) {
-      message.error('Error deleting movie: ' + error);
-    }
-  };
-
-  const columns = [
+  const [columns, setColumns] = useState([
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
+      render: (text) => <span style={{ color: 'red', fontWeight: 'bold' }}>{text}</span>,
     },
     {
       title: 'Duration',
       dataIndex: 'duration',
       key: 'duration',
+      width: 100,
     },
     {
       title: 'Genre',
       dataIndex: 'genre',
       key: 'genre',
+      width: 150,
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+      width: 300,
     },
     {
       title: 'Release Date',
       dataIndex: 'releaseDate',
       key: 'releaseDate',
+      width: 140,
     },
     {
       title: 'Cast',
@@ -76,20 +61,71 @@ const ViewMovies = () => {
         </span>
       ),
     },
-  ];
+  ]);
 
-  const tableStyle = {
-    width: '100%',
-    maxWidth: '800px',
-    maxHeight: '400px', // Adjust the value to your desired height
-    margin: '0 auto',
-    background: '#283593', // Add your desired background color here
+  const adminService = new AdminService();
+
+  useEffect(() => {
+    adminService.getAllMovies().then((data) => {
+      setMovies(data);
+    });
+  }, []);
+
+  const handleDelete = async (key) => {
+    try {
+      console.log(key);
+      await adminService.deleteMovie(key);
+      message.success('Movie deleted successfully!');
+      adminService.getAllMovies().then((data) => {
+        setMovies(data);
+      });
+    } catch (error) {
+      message.error('Error deleting movie: ' + error);
+    }
+  };
+
+  const ResizableTitle = (props) => {
+    const { width, onResize, ...restProps } = props;
+
+    if (!width) {
+      return <th {...restProps} />;
+    }
+
+    return (
+      <Resizable width={width} height={0} onResize={onResize}>
+        <th {...restProps} />
+      </Resizable>
+    );
+  };
+
+  const components = {
+    header: {
+      cell: ResizableTitle,
+    },
+  };
+
+  const handleResize = (index) => (e, { size }) => {
+    setColumns((columns) => {
+      const nextColumns = [...columns];
+      nextColumns[index] = {
+        ...nextColumns[index],
+        width: size.width,
+      };
+      return nextColumns;
+    });
   };
 
   
 
   return (
-    <Table dataSource={movies} columns={columns} style={tableStyle} scroll={{ y: tableStyle.maxHeight }} />
+    <Table
+      dataSource={movies}
+      columns={columns}
+      components={components}
+      bordered
+      scroll={{ y: 400 }}
+      pagination={false}
+    />
   );
 };
 

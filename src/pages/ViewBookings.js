@@ -7,17 +7,11 @@ const ViewBookings = () => {
   const adminService = new AdminService();
 
   useEffect(() => {
-    fetchBookings();
-  }, []);
-
-  const fetchBookings = async () => {
-    try {
-      const data = await adminService.getAllBookings();
+    adminService.getAllBooking().then((data) => {
       setBookings(data);
-    } catch (error) {
-      message.error('Error fetching bookings: ' + error);
-    }
-  };
+    });
+  }, []);
+  
 
   const columns = [
     {

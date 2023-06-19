@@ -1,4 +1,3 @@
-import moment from "moment/moment";
 export default class AdminService {
   BASE_URL = "http://localhost:8880";
 
@@ -441,6 +440,24 @@ export default class AdminService {
     } catch (error) {
       console.log(error);
       return [false, error.toString()];
+    }
+  };
+
+  getAllBooking = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/admin/booking/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   

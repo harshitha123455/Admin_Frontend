@@ -53,9 +53,10 @@ const Movie = () => {
                 maxCount={1}
                 beforeUpload={() => false} // Prevents immediate upload
               >
-                <Button icon={<UploadOutlined />}>Upload</Button>
+                <Button icon={<UploadOutlined />} style={{ marginLeft: "30px" }}>
+                Upload</Button>
               </Upload>
-            </Form.Item>
+            </Form.Item >
             <Form.Item
               name="duration"
               label="Duration"

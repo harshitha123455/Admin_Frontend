@@ -111,7 +111,7 @@ function Dashboard() {
       <Menu.Item key="3" icon={<EditOutlined />}>
         <Link to="/UpdateMovies">UPDATE MOVIES</Link>
       </Menu.Item>
-      <Menu.Item key="3" icon={<EditOutlined />}>
+      <Menu.Item key="3" icon={<PlusCircleOutlined />}>
         <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
       </Menu.Item>
     </DropdownMenu>
@@ -129,11 +129,11 @@ function Dashboard() {
   );
 
   const paymentsMenu = (
-    <DropdownMenu onClick={handleMenuClick}>
+    
       <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/payments">VIEW PAYMENTS</Link>
+        <Link to="/Payment">PAYMENT</Link>
       </Menu.Item>
-    </DropdownMenu>
+    
   );
 
   const screensMenu = (
@@ -200,16 +200,9 @@ function Dashboard() {
             <div />
           </Dropdown>
         )}
-        <ButtonWithDropdown onClick={togglePaymentsDropdown} icon={<BiCreditCard />} size="large">
-          PAYMENTS <DownOutlined />
-        </ButtonWithDropdown>
-        {showPaymentsDropdown && (
-          <Dropdown overlay={paymentsMenu} trigger={['click']} visible={showPaymentsDropdown}>
-            <div />
-          </Dropdown>
-        )}
-        
-        
+         <Button icon={<BiCreditCard />} size="large">
+          <Link to="/Payment">PAYMENTS</Link>
+        </Button>  
       </Sidebar>
       <Header />
     </Container>

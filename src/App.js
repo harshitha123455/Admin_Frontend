@@ -13,6 +13,7 @@ import ViewTimeTable from "./pages/ViewTimeTable";
 import ViewShows from "./pages/ViewShows";
 import ViewBookings from "./pages/ViewBookings";
 import AddHighlightMovies from "./pages/AddHighlightMovies";
+import Payment from "./pages/Payment";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/ViewShows" element={<ViewShows />} />
           <Route exact path="/ViewBookings" element={<ViewBookings />} />
           <Route exact path="/AddHighlightMovies" element={<AddHighlightMovies />} />
+          <Route exact path="/Payment" element={<Payment />} />
 
        
         </Routes>
