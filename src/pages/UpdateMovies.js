@@ -36,7 +36,7 @@ const UpdateMovies = () => {
   const handleUpdate = async () => {
     try {
       if (foundMovie) {
-        const updatedMovie = { ...foundMovie, ...editedData };
+        const updatedMovie = { ...foundMovie, ...editedData, imageUrl: foundMovie.imageUrl };
         const response = await adminService.updateMovie(updatedMovie);
         if (response[0]) {
           message.success('Movie updated successfully!');

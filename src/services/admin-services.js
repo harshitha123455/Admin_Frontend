@@ -126,6 +126,7 @@ export default class AdminService {
           releaseDate: updatedMovie.releaseDate,
           duration: updatedMovie.duration,
           cast: updatedMovie.cast.split(",").map((genre) => genre.trim()),
+          imageUrl: updatedMovie.imageUrl,
         }),
       });
       if (response.status === 202) {
