@@ -7,9 +7,37 @@ const ViewBookings = () => {
   const adminService = new AdminService();
 
   useEffect(() => {
-    adminService.getAllBooking().then((data) => {
-      setBookings(data);
-    });
+    const fetchData = async () => {
+      try {
+        const bookingData = await adminService.getAllBooking();
+        console.log(bookingData);
+  
+        const bookings = await Promise.all(
+          bookingData.map(async (booking) => {
+            const timeTable = await adminService.getTimeTableByShowId(booking.shows.id);
+            console.log(timeTable);
+  
+            return {
+              id: booking.id,
+              user: booking.user,
+              movie: booking.shows.movie.name,
+              seats: booking.pos,
+              totalAmount: booking.payment.amount,
+              date: timeTable.date,
+              time:booking.shows.time,
+              screen: timeTable.screen.name,
+            };
+          })
+        );
+  
+        setBookings(bookings);
+      } catch (error) {
+        console.log(error);
+        message.error(error.message);
+      }
+    };
+  
+    fetchData();
   }, []);
   
 
@@ -26,10 +54,28 @@ const ViewBookings = () => {
       render: (user) => <span>{user.name}</span>,
     },
     {
-      title: 'Show',
-      dataIndex: 'show',
-      key: 'show',
-      render: (show) => <span>{show.movie}</span>,
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+      render: (date) => <span>{date}</span>,
+    },
+    {
+      title: 'Movie',
+      dataIndex: 'movie',
+      key: 'movie',
+      render: (movie) => <span>{movie}</span>,
+    },
+    {
+      title: 'Screen',
+      dataIndex: 'screen',
+      key: 'screen',
+      render: (screen) => <span>{screen}</span>,
+    },
+    {
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
+      render: (time) => <span>{time}</span>,
     },
     {
       title: 'Seats',

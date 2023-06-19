@@ -374,6 +374,26 @@ export default class AdminService {
     }
   };
 
+  getTimeTableByShowId = async (id) => {
+    try {
+      const response = await fetch(
+        this.BASE_URL + "/timeTable/search/show/id/" + id,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   formatDate = (date) => {
     const dateObj = new Date(date);
     const year = dateObj.getFullYear();
