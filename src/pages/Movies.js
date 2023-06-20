@@ -4,6 +4,7 @@ import { Button, Form, Input, DatePicker, message, TimePicker, Upload ,Menu , Dr
 import { UploadOutlined } from "@ant-design/icons";
 import { DownOutlined, UserOutlined, PlusCircleOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
+
 import AdminService from "../services/admin-services";
 import moment from "moment";
 import {Link} from "react-router-dom";
@@ -64,6 +65,9 @@ const movieMenu = (
     </Menu.Item>
     <Menu.Item key="3" icon={<PlusCircleOutlined />}>
       <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<EyeOutlined/>}>
+      <Link to="/ViewHighlightMovies">View HIGHLIGHT MOVIES</Link>
     </Menu.Item>
   </Menu>
 );
