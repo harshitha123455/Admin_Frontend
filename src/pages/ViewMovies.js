@@ -16,16 +16,15 @@ const ViewMovies = () => {
     });
   }, []);
 
-  const handleDelete = async (key) => {
-    try {
-      console.log(key);
-      await adminService.deleteMovie(key);
-      message.success('Movie deleted successfully!');
-      adminService.getAllMovies().then((data) => {
-        setMovies(data);
-      });
-    } catch (error) {
-      message.error('Error deleting movie: ' + error);
+  const handleDelete = async (id) => {
+    if ( window.confirm("Are you sure you want to delete this movie?") ) {
+      const response = await adminService.deleteMovie(id);
+      if(response[0]) {
+        message.success('Movie deleted successfully');
+        setMovies(movies.filter((movie) => movie.id !== id));
+      } else {
+        message.error('Movie could not be deleted. Reason: ' + response[1]);
+      }
     }
   };
 
