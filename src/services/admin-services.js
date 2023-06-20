@@ -282,8 +282,20 @@ export default class AdminService {
     }
   };
 
-  createTimeTable = async (morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen) => {
-    console.log(morningShow, afternoonShow, eveningShow, nightShow, dateAndScreen);
+  createTimeTable = async (
+    morningShow,
+    afternoonShow,
+    eveningShow,
+    nightShow,
+    dateAndScreen
+  ) => {
+    console.log(
+      morningShow,
+      afternoonShow,
+      eveningShow,
+      nightShow,
+      dateAndScreen
+    );
     try {
       const response = await fetch(this.BASE_URL + "/admin/timeTable/add", {
         method: "POST",
@@ -298,26 +310,26 @@ export default class AdminService {
             movie: await this.getMovieByName(morningShow.movie),
             normalRate: morningShow.normalRate,
             premiumRate: morningShow.premiumRate,
-            executiveRate: morningShow.executiveRate
+            executiveRate: morningShow.executiveRate,
           },
           slot2: {
             movie: await this.getMovieByName(afternoonShow.movie),
             normalRate: afternoonShow.normalRate,
             premiumRate: afternoonShow.premiumRate,
-            executiveRate: morningShow.executiveRate
+            executiveRate: morningShow.executiveRate,
           },
           slot3: {
             movie: await this.getMovieByName(eveningShow.movie),
             normalRate: eveningShow.normalRate,
             premiumRate: eveningShow.premiumRate,
-            executiveRate: eveningShow.executiveRate
+            executiveRate: eveningShow.executiveRate,
           },
           slot4: {
             movie: await this.getMovieByName(nightShow.movie),
             normalRate: nightShow.normalRate,
             premiumRate: nightShow.premiumRate,
-            executiveRate: nightShow.executiveRate
-          }
+            executiveRate: nightShow.executiveRate,
+          },
         }),
       });
       if (response.status === 202) {
@@ -325,8 +337,7 @@ export default class AdminService {
       } else {
         return [false, await response.json().then((data) => data.message)];
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return [false, error.toString()];
     }
@@ -442,17 +453,60 @@ export default class AdminService {
   addHighlightMovie = async (movieName, poster) => {
     try {
       const formData = new FormData();
-      formData.append("id", await this.getMovieByName(movieName).then((data) => data.id));
+      formData.append(
+        "id",
+        await this.getMovieByName(movieName).then((data) => data.id)
+      );
       formData.append("image", poster);
-  
-      const response = await fetch(this.BASE_URL + "/admin/highlight/set", {
+
+      const response = await fetch(this.BASE_URL + "/admin/highlight/add", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData,
       });
-  
+
+      if (response.status === 202) {
+        return [true];
+      } else {
+        return [false, await response.json().then((data) => data.message)];
+      }
+    } catch (error) {
+      console.log(error);
+      return [false, error.toString()];
+    }
+  };
+
+  getHighlightMovies = async () => {
+    try {
+      const response = await fetch(this.BASE_URL + "/movie/highlight/get", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 202) {
+        const responseBody = await response.json();
+        return responseBody;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteHighlightMovie = async (id) => {
+    try {
+      const response = await fetch(
+        this.BASE_URL + "/admin/movie/highlight/remove/id/" + id,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       if (response.status === 202) {
         return [true];
       } else {
@@ -499,6 +553,5 @@ export default class AdminService {
     } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
 }

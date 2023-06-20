@@ -150,7 +150,7 @@ const paymentsMenu = (
           </AnimatedHeading>
         </h1>
         <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '50%',right: '30%', transform: 'translate(-50%, -50%)' }}>
-          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(160, 72, 236, 0.52)' }}>
+          <AnimatedCard style={{ width: '300px' , height: "100px" ,  marginRight: "600px" , backgroundColor: 'rgba(160, 72, 236, 0.52)' }}>
             <ButtonWithDropdown onClick={toggleMoviesDropdown} icon={<BiMovie />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
               MOVIES <DownOutlined />
             </ButtonWithDropdown>
@@ -162,7 +162,7 @@ const paymentsMenu = (
           </AnimatedCard>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '83%',right: '30%', transform: 'translate(-50%, -50%)' }}>
-          <AnimatedCard style={{ width: '300px' , marginRight: "600px", backgroundColor: 'rgba(252, 88, 152, 0.42)' }}>
+          <AnimatedCard style={{ width: '300px' , height: "100px" , marginRight: "600px", backgroundColor: 'rgba(252, 88, 152, 0.42)' }}>
           <ButtonWithDropdown onClick={toggleScreensDropdown} icon={<BiDesktop />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           SCREENS <DownOutlined />
         </ButtonWithDropdown>
@@ -174,7 +174,7 @@ const paymentsMenu = (
           </AnimatedCard>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '115%',right: '30%', transform: 'translate(-50%, -50%)' }}>
-          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(105, 186, 246, 0.42)'}}>
+          <AnimatedCard style={{ width: '300px' , height: "100px" , marginRight: "600px" , backgroundColor: 'rgba(105, 186, 246, 0.42)'}}>
           <ButtonWithDropdown onClick={toggleTimetableDropdown} icon={<BiCalendar />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           TIMETABLE <DownOutlined />
         </ButtonWithDropdown>
@@ -186,7 +186,7 @@ const paymentsMenu = (
           </AnimatedCard>
     </div>
     <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '600%', left: '65%',right: '90%', transform: 'translate(-50%, -50%)' }}>
-          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor : 'rgba(246, 83, 40, 0.59)'}}>
+          <AnimatedCard style={{ width: '300px' , height: "100px" , marginRight: "600px" , backgroundColor : 'rgba(246, 83, 40, 0.59)'}}>
           <ButtonWithDropdown onClick={toggleShowsDropdown} icon={<BiTable />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           SHOWS <DownOutlined />
         </ButtonWithDropdown>
@@ -198,9 +198,9 @@ const paymentsMenu = (
           </AnimatedCard>
     </div>
     <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '600%', left: '105%',right: '90%', transform: 'translate(-50%, -50%)' }}>
-          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(250, 31, 31, 0.41)' }}>
+          <AnimatedCard style={{ width: '300px' , height: "100px" , marginRight: "600px" , backgroundColor: 'rgba(250, 31, 31, 0.41)' }}>
           <Button icon={<BiCreditCard />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
-          <Link to="/Payment">PAYMENTS</Link>
+          <Link to="/Payment" style={{fontWeight: "bold"}}>PAYMENTS</Link>
         </Button>
           </AnimatedCard>
     </div>
