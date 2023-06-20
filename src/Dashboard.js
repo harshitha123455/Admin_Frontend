@@ -1,49 +1,40 @@
 import React, { useState } from 'react';
+import "./App.css";
 import styled from 'styled-components';
+import Header from './components/Header';
+import { Card} from 'antd';
 import { Link } from 'react-router-dom';
 import { BiMovie, BiFilm, BiTimeFive, BiShow, BiMoney, BiTable, BiCalendar, BiCreditCard, BiDesktop } from 'react-icons/bi';
-import { DownOutlined, UserOutlined , PlusCircleOutlined , DeleteOutlined , EditOutlined , EyeOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined, PlusCircleOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, message } from 'antd';
-import Header from './components/Header';
-import LogoImage from './images/Logo.png';
-import ViewMovies from './pages/ViewMovies';
+import { keyframes } from 'styled-components';
 
-const Container = styled.div`
-  display: flex;
-  height: 100vh;
-  background-color: transparent black;
-  margin-right: 1285px;
-`;
+const Dashboard = () => {
+  const [showMoviesDropdown, setShowMoviesDropdown] = useState(false);
+  const [showScreensDropdown, setShowScreensDropdown] = useState(false);
+  const [showTimetableDropdown, setShowTimetableDropdown] = useState(false);
+  const [showShowsDropdown, setShowShowsDropdown] = useState(false);
+  const [showPaymentsDropdown, setShowPaymentsDropdown] = useState(false);
+  const [isHeadingVisible, setIsHeadingVisible] = useState(false);
 
-const Sidebar = styled.div`
-  width: 250px;
-  background-color: rgba(0, 0, 0, 0.5); /* Black color with opacity */
-  color: #fff;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  backdrop-filter: blur(10px); /* Apply blur effect */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Apply box shadow effect */
-`;
 
-const LogoContainer = styled.div`
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-  padding: 20px;
-`;
-
-const Logo = styled.img`
-  width: 200%; /* Make the logo occupy the entire width of the container */
-  height: 260%; /* Make the logo occupy the entire height of the container */
-`;
-
-const ButtonWithDropdown = styled(Button)`
+  const toggleMoviesDropdown = () => {
+    setShowMoviesDropdown(!showMoviesDropdown);
+  };
+  const toggleScreensDropdown = () => {
+    setShowScreensDropdown(!showScreensDropdown);
+  };
+  const toggleTimetableDropdown = () => {
+    setShowTimetableDropdown(!showTimetableDropdown);
+  };
+  const toggleShowsDropdown = () => {
+    setShowShowsDropdown(!showShowsDropdown);
+  };
+  const togglePaymentsDropdown = () => {
+    setShowPaymentsDropdown(!showPaymentsDropdown);
+  };
+  
+  const ButtonWithDropdown = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,125 +49,121 @@ const ButtonWithDropdown = styled(Button)`
   }
 `;
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
+const AnimatedHeading = styled.h1`
+  font-weight: bold;
+  text-align: center;
+  font-family: YourChosenFont, sans-serif;
+  color: lightblue;
+  font-size: 55px;
+  margin-top: 0px;
+  margin-bottom: 400px;
+  opacity: ${props => (props.isVisible ? 1 : 0)};
+  animation: ${fadeIn} 1s ease-in forwards;
+`;
+const AnimatedCard = styled(Card)`
+  animation: ${fadeIn} 0.5s ease-in-out;
+`;
 
 const DropdownMenu = styled(Menu)`
   padding-left: 20px;
 `;
+const handleMenuClick = (e) => {
+  console.log('click', e);
+};
 
-function Dashboard() {
-  const [showMoviesDropdown, setShowMoviesDropdown] = useState(false);
-  const [showShowsDropdown, setShowShowsDropdown] = useState(false);
-  const [showPaymentsDropdown, setShowPaymentsDropdown] = useState(false);
-  const [showScreensDropdown, setShowScreensDropdown] = useState(false);
-  const [showTimetableDropdown, setShowTimetableDropdown] = useState(false);
-
-  const toggleMoviesDropdown = () => {
-    setShowMoviesDropdown(!showMoviesDropdown);
-  };
-
-  const toggleShowsDropdown = () => {
-    setShowShowsDropdown(!showShowsDropdown);
-  };
-
-  const togglePaymentsDropdown = () => {
-    setShowPaymentsDropdown(!showPaymentsDropdown);
-  };
-
-  const toggleScreensDropdown = () => {
-    setShowScreensDropdown(!showScreensDropdown);
-  };
-
-  const toggleTimetableDropdown = () => {
-    setShowTimetableDropdown(!showTimetableDropdown);
-  };
-
-  const handleButtonClick = (e) => {
-    message.info('Click on left button.');
-    console.log('click left button', e);
-  };
-
-  const handleMenuClick = (e) => {
-    message.info('Click on menu item.');
-    console.log('click', e);
-  };
-
-  const moviesMenu = (
-    <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
-        <Link to="/movies">ADD MOVIES</Link>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<EyeOutlined />}>
-        <Link to="/ViewMovies">VIEW MOVIES</Link>
-      </Menu.Item>
-      <Menu.Item key="3" icon={<EditOutlined />}>
-        <Link to="/UpdateMovies">UPDATE MOVIES</Link>
-      </Menu.Item>
-      <Menu.Item key="3" icon={<PlusCircleOutlined />}>
-        <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
-      </Menu.Item>
-    </DropdownMenu>
-  );
-
-  const showsMenu = (
-    <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/ViewShows">VIEW SHOWS</Link>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        <Link to="/ViewBookings">VIEW BOOKINGS</Link>
-      </Menu.Item>
-    </DropdownMenu>
-  );
-
-  const paymentsMenu = (
-    
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/Payment">PAYMENT</Link>
-      </Menu.Item>
-    
-  );
-
-  const screensMenu = (
-    <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
-        <Link to="/screens">ADD SCREENS</Link>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<EyeOutlined  />}>
-        <Link to="/ViewScreens">VIEW SCREENS</Link>
-      </Menu.Item>
-      <Menu.Item key="3" icon={< EditOutlined/>}>
-        <Link to="/UpdateScreens">UPDATE SCREENS</Link>
-      </Menu.Item>
-    </DropdownMenu>
-  );
-
-  const timetableMenu = (
-    <DropdownMenu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={< PlusCircleOutlined/>}>
-        <Link to="/TimeTable">ADD TIMETABLE</Link>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<EyeOutlined />}>
-        <Link to="/ViewTimeTable">VIEW TIMETABLE</Link>
-      </Menu.Item>
-    </DropdownMenu>
-  );
+const moviesMenu = (
+  <DropdownMenu onClick={handleMenuClick}>
+    <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+      <Link to="/movies">ADD MOVIES</Link>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<EyeOutlined />}>
+      <Link to="/ViewMovies">VIEW MOVIES</Link>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<EditOutlined />}>
+      <Link to="/UpdateMovies">UPDATE MOVIES</Link>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<PlusCircleOutlined />}>
+      <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<PlusCircleOutlined />}>
+      <Link to="/ViewHighlightMovies">VIEW HIGHLIGHT MOVIES</Link>
+    </Menu.Item>
+  </DropdownMenu>
+);
+const screensMenu = (
+  <DropdownMenu onClick={handleMenuClick}>
+    <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+      <Link to="/screens">ADD SCREENS</Link>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<EyeOutlined />}>
+      <Link to="/ViewScreens">VIEW SCREENS</Link>
+    </Menu.Item>
+    <Menu.Item key="3" icon={<EditOutlined />}>
+      <Link to="/UpdateScreens">UPDATE SCREENS</Link>
+    </Menu.Item>
+  </DropdownMenu>
+);
+const timetableMenu = (
+  <DropdownMenu onClick={handleMenuClick}>
+    <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+      <Link to="/TimeTable">ADD TIMETABLE</Link>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<EyeOutlined />}>
+      <Link to="/ViewTimeTable">VIEW TIMETABLE</Link>
+    </Menu.Item>
+  </DropdownMenu>
+);
+const showsMenu = (
+  <DropdownMenu onClick={handleMenuClick}>
+    <Menu.Item key="1" icon={<UserOutlined />}>
+      <Link to="/ViewShows">VIEW SHOWS</Link>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<UserOutlined />}>
+      <Link to="/ViewBookings">VIEW BOOKINGS</Link>
+    </Menu.Item>
+  </DropdownMenu>
+);
+const paymentsMenu = (
+  <Menu.Item key="1" icon={<UserOutlined />}>
+    <Link to="/Payment">PAYMENT</Link>
+  </Menu.Item>
+);
 
   return (
-    <Container>
-      <Sidebar>
-        <LogoContainer>
-          <Logo src={LogoImage} alt="Logo" />
-        </LogoContainer>
-        <ButtonWithDropdown onClick={toggleMoviesDropdown} icon={<BiMovie />} size="large">
-          MOVIES <DownOutlined />
-        </ButtonWithDropdown>
-        {showMoviesDropdown && (
-          <Dropdown overlay={moviesMenu} trigger={['click']} visible={showMoviesDropdown}>
-            <div />
-          </Dropdown>
-        )}
-        <ButtonWithDropdown onClick={toggleScreensDropdown} icon={<BiDesktop />} size="large">
+    <div>
+      <Header width="1000px">
+      </Header>
+      <div style={{ position: 'relative' }}>
+        <h1 
+        style={{ fontWeight: 'bold', textAlign: 'center', fontFamily: 'YourChosenFont, sans-serif', color: "lightblue", fontSize: '55px', marginTop: "0px", marginBottom: '400px' }}>
+          <AnimatedHeading isVisible={isHeadingVisible}>
+          WELCOME TO ADMIN DASHBOARD
+          </AnimatedHeading>
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '50%',right: '30%', transform: 'translate(-50%, -50%)' }}>
+          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(160, 72, 236, 0.52)' }}>
+            <ButtonWithDropdown onClick={toggleMoviesDropdown} icon={<BiMovie />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
+              MOVIES <DownOutlined />
+            </ButtonWithDropdown>
+            {showMoviesDropdown && (
+              <Dropdown overlay={moviesMenu} trigger={['click']} visible={showMoviesDropdown}>
+                <div />
+              </Dropdown>
+            )}
+          </AnimatedCard>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '83%',right: '30%', transform: 'translate(-50%, -50%)' }}>
+          <AnimatedCard style={{ width: '300px' , marginRight: "600px", backgroundColor: 'rgba(252, 88, 152, 0.42)' }}>
+          <ButtonWithDropdown onClick={toggleScreensDropdown} icon={<BiDesktop />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           SCREENS <DownOutlined />
         </ButtonWithDropdown>
         {showScreensDropdown && (
@@ -184,8 +171,11 @@ function Dashboard() {
             <div />
           </Dropdown>
         )}
-        
-        <ButtonWithDropdown onClick={toggleTimetableDropdown} icon={<BiCalendar />} size="large">
+          </AnimatedCard>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '300%', left: '115%',right: '30%', transform: 'translate(-50%, -50%)' }}>
+          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(105, 186, 246, 0.42)'}}>
+          <ButtonWithDropdown onClick={toggleTimetableDropdown} icon={<BiCalendar />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           TIMETABLE <DownOutlined />
         </ButtonWithDropdown>
         {showTimetableDropdown && (
@@ -193,7 +183,11 @@ function Dashboard() {
             <div />
           </Dropdown>
         )}
-        <ButtonWithDropdown onClick={toggleShowsDropdown} icon={<BiTable />} size="large">
+          </AnimatedCard>
+    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '600%', left: '65%',right: '90%', transform: 'translate(-50%, -50%)' }}>
+          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor : 'rgba(246, 83, 40, 0.59)'}}>
+          <ButtonWithDropdown onClick={toggleShowsDropdown} icon={<BiTable />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           SHOWS <DownOutlined />
         </ButtonWithDropdown>
         {showShowsDropdown && (
@@ -201,14 +195,18 @@ function Dashboard() {
             <div />
           </Dropdown>
         )}
-         <Button icon={<BiCreditCard />} size="large">
+          </AnimatedCard>
+    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', top: '600%', left: '105%',right: '90%', transform: 'translate(-50%, -50%)' }}>
+          <AnimatedCard style={{ width: '300px' , marginRight: "600px" , backgroundColor: 'rgba(250, 31, 31, 0.41)' }}>
+          <Button icon={<BiCreditCard />} size="large" style={{ backgroundColor: '#5610757D', color: '#fff' }}>
           <Link to="/Payment">PAYMENTS</Link>
-        </Button>  
-      </Sidebar>
-      <Header />
-    
-    </Container>
+        </Button>
+          </AnimatedCard>
+    </div>
+    </div>
+    </div>
   );
-}
+            }   
 
 export default Dashboard;

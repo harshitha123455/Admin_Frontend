@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Logo from "../images/Logo.png";
 
 const HeaderContainer = styled.header`
   background-color: rgba(0, 0, 0, 0.5);
@@ -16,6 +17,12 @@ const HeaderContainer = styled.header`
   left: 0;
 `;
 
+const LogoImage = styled.img`
+  width: 40px;
+  margin-right: 20px;
+  width: 200px;
+`;
+
 const LogoutButton = styled.button`
   background-color: #007bff;
   color: white;
@@ -24,12 +31,11 @@ const LogoutButton = styled.button`
   border-radius: 4px;
   padding: 8px 16px;
   margin-right: 30px;
-  margin-left: 1290px;
+  margin-left: 1200px;
   cursor: pointer;
 `;
 
 const Header = ({ onLogout }) => {
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -44,6 +50,7 @@ const Header = ({ onLogout }) => {
 
   return (
     <HeaderContainer>
+      <LogoImage src={Logo} alt="Logo" />
       <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
     </HeaderContainer>
   );
