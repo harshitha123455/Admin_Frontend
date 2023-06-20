@@ -1,68 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag } from 'antd';
-import { Resizable } from 'react-resizable';
+import { Tag, message, Card, Button, Breadcrumb } from 'antd';
 import AdminService from '../services/admin-services';
-import { message } from 'antd';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
+
+const { Meta } = Card;
 
 const ViewMovies = () => {
   const [movies, setMovies] = useState([]);
-  const [columns, setColumns] = useState([
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      width: 150,
-      render: (text) => <span style={{ color: 'red', fontWeight: 'bold' }}>{text}</span>,
-    },
-    {
-      title: 'Duration',
-      dataIndex: 'duration',
-      key: 'duration',
-      width: 100,
-    },
-    {
-      title: 'Genre',
-      dataIndex: 'genre',
-      key: 'genre',
-      width: 150,
-    },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-      width: 300,
-    },
-    {
-      title: 'Release Date',
-      dataIndex: 'releaseDate',
-      key: 'releaseDate',
-      width: 140,
-    },
-    {
-      title: 'Cast',
-      dataIndex: 'cast',
-      key: 'cast',
-      render: (cast) => (
-        <span>
-          {cast.map((actor, index) => (
-            <Tag color="blue" key={index}>
-              {actor}
-            </Tag>
-          ))}
-        </span>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <span>
-          <a onClick={() => handleDelete(record.id)}>Delete</a>
-        </span>
-      ),
-    },
-  ]);
-
   const adminService = new AdminService();
 
   useEffect(() => {
@@ -84,48 +29,54 @@ const ViewMovies = () => {
     }
   };
 
-  const ResizableTitle = (props) => {
-    const { width, onResize, ...restProps } = props;
-
-    if (!width) {
-      return <th {...restProps} />;
-    }
-
-    return (
-      <Resizable width={width} height={0} onResize={onResize}>
-        <th {...restProps} />
-      </Resizable>
-    );
-  };
-
-  const components = {
-    header: {
-      cell: ResizableTitle,
-    },
-  };
-
-  const handleResize = (index) => (e, { size }) => {
-    setColumns((columns) => {
-      const nextColumns = [...columns];
-      nextColumns[index] = {
-        ...nextColumns[index],
-        width: size.width,
-      };
-      return nextColumns;
-    });
-  };
-
-  
-
   return (
-    <Table
-      dataSource={movies}
-      columns={columns}
-      components={components}
-      bordered
-      scroll={{ y: 400 }}
-      pagination={false}
-    />
+    <div>
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>View Movies</Breadcrumb.Item>
+      </Breadcrumb>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px', color: '#32a6f3' }}>VIEW MOVIES</h1>
+      <Carousel showArrows={true}>
+        {movies.map((movie) => (
+          <div key={movie.id} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Card style={{ width: 500, background: 'rgba(255, 255, 255, 0.5)' }}>
+              <Meta
+                title={<h1 style={{ color: 'red', fontWeight: 'bold', fontSize: '30px' }}>{movie.name}</h1>}
+                description={
+                  <div>
+                    <p style={{ fontSize: '20px', marginBottom: '0px', marginLeft: '0px', marginRight: '35px' }}>
+                      <strong style={{ fontSize: '22px' }}>Duration:</strong>{' '}
+                      <span style={{ fontSize: '20px' }}>{movie.duration}</span>
+                    </p>
+                    <p style={{ fontSize: '20px', marginBottom: '0px', marginLeft: '0px', marginRight: '30px' }}>
+                      <strong style={{ fontSize: '22px' }}>Genre:</strong>{' '}
+                      <span style={{ fontSize: '20px' }}>{movie.genre}</span>
+                    </p>
+                    <p style={{ fontSize: '20px', marginBottom: '0px', marginLeft: '0px', marginRight: '30px' }}>
+                      <strong>Description:</strong> {movie.description}
+                    </p>
+                    <p style={{ fontSize: '20px', marginBottom: '0px', marginLeft: '0px', marginRight: '30px' }}>
+                      <strong>Release Date:</strong> {movie.releaseDate}
+                    </p>
+                    <p style={{ fontSize: '20px', marginBottom: '0px', marginLeft: '0px', marginRight: '30px' }}>
+                      <strong>Cast:</strong>{' '}
+                      {movie.cast.map((actor, index) => (
+                        <Tag color="blue" key={index}>
+                          {actor}
+                        </Tag>
+                      ))}
+                    </p>
+                    <p>
+                      <Button type="primary" onClick={() => handleDelete(movie.id)}>Delete</Button>
+                    </p>
+                  </div>
+                }
+              />
+            </Card>
+          </div>
+        ))}
+      </Carousel>
+    </div>
   );
 };
 
