@@ -39,7 +39,7 @@ const ViewMovies = () => {
       <Carousel showArrows={true}>
         {movies.map((movie) => (
           <div key={movie.id} style={{ display: 'flex', justifyContent: 'center' }}>
-            <Card style={{ width: 500, background: 'rgba(255, 255, 255, 0.5)' }}>
+            <Card style={{ width: 500, background: 'rgba(255, 255, 255, 0.7)' }}>
               <Meta
                 title={<h1 style={{ color: 'red', fontWeight: 'bold', fontSize: '30px' }}>{movie.name}</h1>}
                 description={
@@ -66,8 +66,8 @@ const ViewMovies = () => {
                         </Tag>
                       ))}
                     </p>
-                    <p>
-                      <Button type="primary" onClick={() => handleDelete(movie.id)}>Delete</Button>
+                    <p style={{ border: '3px solid #000', padding: '3px', margin: '20px 185px' }}>
+                    <Button type="primary" onClick={() => handleDelete(movie.id)}>Delete</Button>
                     </p>
                   </div>
                 }

@@ -59,6 +59,7 @@ const ButtonWithDropdown = styled(Button)`
 `;
 
 
+
 const DropdownMenu = styled(Menu)`
   padding-left: 20px;
 `;
@@ -205,6 +206,7 @@ function Dashboard() {
         </Button>  
       </Sidebar>
       <Header />
+    
     </Container>
   );
 }
