@@ -11,7 +11,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh;  
 `;
 
 const TopText = styled.h1`
@@ -26,7 +26,7 @@ const Box = styled.div`
   border-radius: 8px;
   padding: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 500px;
 `;
 
 const ButtonContainer = styled.div`
@@ -210,6 +210,7 @@ const AddHighlightMovie = () => {
               id="movieName"
               value={movieName}
               onChange={handleMovieNameChange}
+              style={{ width: "250px", marginLeft: "38px", height: "40px", fontSize: "16px"}}
             >
               <option value="">Select a movie</option>
               {movies.map((movie) => (
@@ -226,6 +227,7 @@ const AddHighlightMovie = () => {
               id="poster"
               accept="image/*"
               onChange={handlePosterChange}
+              style={{ width: "250px", marginLeft: "38px", marginTop:"20px" ,height: "40px", fontSize: "16px"}}
             />
           </div>
           <ButtonContainer>

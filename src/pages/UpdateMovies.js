@@ -271,7 +271,7 @@ const UpdateMovies = () => {
           placeholder="Search movie by name"
           value={searchValue}
           onChange={handleSearchChange}
-          style={{ width: "300px", height: "40px", marginRight: "10px" }}
+          style={{ width: "300px", height: "40px", marginRight: "10px", fontSize:"18px" }}
         />
         <Button
           type="primary"

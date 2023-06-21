@@ -62,7 +62,7 @@ const MainContainer = styled.div`
 `;
 
 const Box = styled.div`
-  background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
+  background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
   border-radius: 8px;
   padding: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

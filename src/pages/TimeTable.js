@@ -276,7 +276,7 @@ font-weight: bold;
         <Box>
           <Form form={form} onFinish={handleFormSubmit}>
             <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-              <DatePicker style={{ width: "100%" }}  disabledDate={(current) => current && current < moment().endOf('day')}
+              <DatePicker style={{ width: "100%" }}  disabledDate={(current) => current && (current < moment().startOf("day"))}
   />
             </Form.Item>
             <Form.Item name="screen" label="Screen" rules={[{ required: true }]}>
@@ -561,7 +561,7 @@ const TopText = styled.h1`
 `;
 
 const Box = styled.div`
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   padding: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

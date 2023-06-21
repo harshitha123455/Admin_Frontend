@@ -158,7 +158,7 @@ font-weight: bold;
       <Box>
         <Form form={form} onFinish={handleFormSubmit}>
           <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-            <DatePicker style={{ width: "100%" }} disabledDate={(current) => current && current < moment().endOf('day')}/>
+            <DatePicker style={{ width: "100%" }}/>
           </Form.Item>
           <Form.Item name="screen" label="Screen" rules={[{ required: true }]}>
             <Select style={{ width: "100%" }}>

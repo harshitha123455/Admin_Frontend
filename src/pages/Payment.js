@@ -68,6 +68,14 @@ const PaymentForm = () => {
     left: 900px;
   `;
 
+  const tableStyle = {
+    width: '70%',
+    maxWidth: '800px',
+    maxHeight: '400px', // Adjust the value to your desired height
+    margin: '0 auto',
+    background: '#283593', // Add your desired background color here
+  };
+
   const movieMenu = (
     <Menu>
       <Menu.Item key="1" icon={<PlusCircleOutlined />}>
@@ -142,7 +150,7 @@ const PaymentForm = () => {
   `;
   return (
     <MainContainer>
-      <Text>VIEW BOOKINGS</Text>
+      <Text>VIEW PAYMENT</Text>
       <HeaderContainer>
         <Menu mode="horizontal" theme='dark'>
           <Menu.Item key="home">
@@ -173,6 +181,7 @@ const PaymentForm = () => {
           </Menu.Item>
         </Menu>
       </HeaderContainer>
+      <Table dataSource={paymentData} columns={columns} style={tableStyle} scroll={{ y: tableStyle.maxHeight }} />
     </MainContainer>
   );
 };
