@@ -1,7 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Tag, message, Card, Button, Breadcrumb } from "antd";
 import AdminService from "../services/admin-services";
-import { Carousel } from 'react-responsive-carousel';
+import styled from "styled-components";
+import {
+  DownOutlined,
+  UserOutlined,
+  PlusCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
+import {
+  Form,
+  Input,
+  DatePicker,
+  TimePicker,
+  Upload,
+  Menu,
+  Dropdown,
+} from "antd";
+import { Link } from "react-router-dom";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const { Meta } = Card;
 
@@ -18,7 +38,86 @@ const ViewHighlightMovies = () => {
       setMovies(moviesData);
     });
   }, []);
-  
+
+  const HeaderContainer = styled.header`
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0px;
+    right: 0;
+    left: 950px;
+  `;
+
+  const movieMenu = (
+    <Menu>
+      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+        <Link to="/movies">ADD MOVIES</Link>
+      </Menu.Item>
+      <Menu.Item key="2" icon={<EyeOutlined />}>
+        <Link to="/ViewMovies">VIEW MOVIES</Link>
+      </Menu.Item>
+      <Menu.Item key="3" icon={<EditOutlined />}>
+        <Link to="/UpdateMovies">UPDATE MOVIES</Link>
+      </Menu.Item>
+      <Menu.Item key="3" icon={<PlusCircleOutlined />}>
+        <Link to="/AddHighlightMovies">ADD HIGHLIGHT MOVIES</Link>
+      </Menu.Item>
+      <Menu.Item key="3" icon={<EyeOutlined />}>
+        <Link to="/ViewHighlightMovies">View HIGHLIGHT MOVIES</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const screenMenu = (
+    <Menu>
+      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+        <Link to="/screens">ADD SCREENS</Link>
+      </Menu.Item>
+      <Menu.Item key="2" icon={<EyeOutlined />}>
+        <Link to="/ViewScreens">VIEW SCREENS</Link>
+      </Menu.Item>
+      <Menu.Item key="3" icon={<EditOutlined />}>
+        <Link to="/UpdateScreens">UPDATE SCREENS</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const timetableMenu = (
+    <Menu>
+      <Menu.Item key="1" icon={<PlusCircleOutlined />}>
+        <Link to="/TimeTable">ADD TIMETABLE</Link>
+      </Menu.Item>
+      <Menu.Item key="2" icon={<EyeOutlined />}>
+        <Link to="/ViewTimeTable">VIEW TIMETABLE</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const showsMenu = (
+    <Menu>
+      <Menu.Item key="1" icon={<UserOutlined />}>
+        <Link to="/ViewShows">VIEW SHOWS</Link>
+      </Menu.Item>
+      <Menu.Item key="2" icon={<UserOutlined />}>
+        <Link to="/ViewBookings">VIEW BOOKINGS</Link>
+      </Menu.Item>
+    </Menu>
+  );
+  const Text = styled.div`
+    position: absolute;
+    top: 10%;
+    right: 75%;
+    left: 20px;
+    transform: translateX(-80%);
+    color: lightblue;
+    font-size: 28px;
+    font-weight: bold;
+  `;
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this movie?")) {
@@ -39,6 +138,36 @@ const ViewHighlightMovies = () => {
       >
         HIGHLIGHT MOVIES
       </h1>
+      <HeaderContainer>
+        <Menu mode="horizontal" theme="dark">
+          <Menu.Item key="home">
+            <Link to="/dashboard">HOME</Link>
+          </Menu.Item>
+          <Dropdown overlay={movieMenu} placement="bottomLeft" arrow>
+            <Menu.Item key="movies" title="Movies">
+              <span>MOVIES</span>
+            </Menu.Item>
+          </Dropdown>
+          <Dropdown overlay={screenMenu} placement="bottomLeft" arrow>
+            <Menu.Item key="screen" title="Movies">
+              <span>SCREENS</span>
+            </Menu.Item>
+          </Dropdown>
+          <Dropdown overlay={timetableMenu} placement="bottomLeft" arrow>
+            <Menu.Item key="timetable" title="Timetable">
+              <span>TIMETABLE</span>
+            </Menu.Item>
+          </Dropdown>
+          <Dropdown overlay={showsMenu} placement="bottomLeft" arrow>
+            <Menu.Item key="shows" title="Shows">
+              <span>SHOWS</span>
+            </Menu.Item>
+          </Dropdown>
+          <Menu.Item key="payments">
+            <Link to="/payment">PAYMENT</Link>
+          </Menu.Item>
+        </Menu>
+      </HeaderContainer>
       <Carousel showArrows={true}>
         {movies.map((movie) => (
           <div
@@ -72,7 +201,9 @@ const ViewHighlightMovies = () => {
                       }}
                     >
                       <strong style={{ fontSize: "22px" }}>Duration:</strong>{" "}
-                      <span style={{ fontSize: "20px" }}>{movie.movie.duration}</span>
+                      <span style={{ fontSize: "20px" }}>
+                        {movie.movie.duration}
+                      </span>
                     </p>
                     <p
                       style={{
@@ -84,7 +215,9 @@ const ViewHighlightMovies = () => {
                       }}
                     >
                       <strong style={{ fontSize: "22px" }}>Genre:</strong>{" "}
-                      <span style={{ fontSize: "20px" }}>{movie.movie.genre}</span>
+                      <span style={{ fontSize: "20px" }}>
+                        {movie.movie.genre}
+                      </span>
                     </p>
                     <p
                       style={{
@@ -120,9 +253,13 @@ const ViewHighlightMovies = () => {
                     >
                       <strong>Cast:</strong>{" "}
                       {movie.movie.cast.map((actor, index) => (
-                        <Tag color="blue" key={index} style={{
-                          fontSize: "15px",
-                        }}>
+                        <Tag
+                          color="blue"
+                          key={index}
+                          style={{
+                            fontSize: "15px",
+                          }}
+                        >
                           {actor}
                         </Tag>
                       ))}
